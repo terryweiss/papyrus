@@ -7,7 +7,8 @@ var events = require( "eventemitter2" );
 var sys = require( "lodash" );
 var strings = require( "ink-strings" );
 
-var C = dcl( [Destroyable, events.EventEmitter2], {
+//noinspection JSHint
+var C = exports = dcl( [Destroyable, events.EventEmitter2], {
 	destroy     : function () {
 		this.removeAllListeners();
 	},
@@ -47,5 +48,6 @@ var C = dcl( [Destroyable, events.EventEmitter2], {
 		}
 	} )
 } );
+C.prototype.trigger = C.prototype.emit;
 
 lifecycle.use( C, exports );

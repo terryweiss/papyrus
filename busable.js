@@ -10,7 +10,7 @@ var Destroyable = require( "dcl/mixins/Destroyable" );
 //noinspection JSUnusedGlobalSymbols,JSHint
 var C = exports = dcl( Destroyable, {
 	declaredClass : "Busable",
-	constructor   : function () {
+	constructor   : function ( channelName ) {
 		var subscriptions = collector.array();
 
 		//noinspection JSUnusedGlobalSymbols
@@ -21,12 +21,12 @@ var C = exports = dcl( Destroyable, {
 		} );
 
 		this.channel = null;
+		this.channelName = channelName;
 		if ( !sys.isEmpty( this.channelName ) ) {
 			this.defineChannel( this.channelName );
 		}
 	},
 
-	channelName   : null,
 	defineChannel : function ( name ) {
 		this.channelName = name;
 		this.channel = bus.channel( name );
@@ -65,10 +65,10 @@ var C = exports = dcl( Destroyable, {
 			if ( options.defer === true ) {
 				subscription.defer();
 			}
-			if ( sys.isFunction( options.once ) ) {
+			if ( options.once === true ) {
 				subscription.disposeAfter( 1 );
 			}
-			if ( sys.isFunction( options.times ) ) {
+			if ( sys.isNumber( options.times ) ) {
 				subscription.disposeAfter( options.times );
 			}
 			if ( sys.isNumber( options.debounce ) ) {
@@ -106,6 +106,10 @@ var C = exports = dcl( Destroyable, {
 	},
 
 	unsubscribe : function ( channelName, topic ) {
+		if ( arguments.length === 1 ) {
+			topic = channelName;
+			channelName = null;
+		}
 		var def = {topic : topic};
 
 		if ( channelName ) {
