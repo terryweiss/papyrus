@@ -3,3 +3,4 @@ bower_components*
 *.map
 .idea*
 npm-debug.log
+dox*

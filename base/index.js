@@ -62,7 +62,7 @@ var Base = dcl( [chains], /** @lends base# */{
 	/**
 	 * Called when it is time to get rid of all of your instance level references and objects and events. You can
 	 * define this method on your own classes without having to call the superclass instance. It is called by
-	 * `instance.end()`
+	 * `instance.end()` automatically
 	 * @see {base/chains#end}
 	 * @see {base/chains#destroy}
 	 */

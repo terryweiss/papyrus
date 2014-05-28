@@ -1,28 +1,34 @@
 {
-	"name"         : "papyrus",
-	"version"      : "0.0.0-2",
-	"description"  : "A library of useful tools and conventions to make shared client and server code a possibility",
-	"dependencies" : {
-		"lodash"        : "~2.4.0",
-		"postal"        : "~0.8.9",
+	"name"            : "papyrus",
+	"version"         : "0.0.0-2",
+	"description"     : "A library of useful tools and conventions to make shared client and server code a possibility",
+	"dependencies"    : {
+		"async"         : "^0.9.0",
 		"eventemitter2" : "~0.4.13",
-		"signals"       : "~1.0.0",
-		"loglevel"      : "~0.6.0"
+		"lodash"        : "~2.4.0",
+		"loglevel"      : "~0.6.0",
+		"postal"        : "~0.8.9",
+		"promise"       : "^5.0.0",
+		"signals"       : "~1.0.0"
 	},
-	"license"      : "MIT",
-	"author"       : {
+	"license"         : "MIT",
+	"author"          : {
 		"name"  : "Terry Weiss",
 		"email" : "me@terryweiss.net"
 	},
-	"bugs"         : {
+	"bugs"            : {
 		"url" : "https://github.com/terryweiss/papyrus/issues"
 	},
-	"repository"   : {
+	"repository"      : {
 		"type" : "git",
 		"url"  : "https://github.com/terryweiss/papyrus.git"
 	},
-	"engines"      : [
+	"engines"         : [
 		"node",
 		"web"
-	]
+	],
+	"devDependencies" : {
+		"grunt-shell"  : "~0.7.0",
+		"ink-docstrap" : "^0.4.2"
+	}
 }
