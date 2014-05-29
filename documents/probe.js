@@ -966,15 +966,6 @@ var bindables = {
 	"set"      : exports.set
 };
 
-var dataBinderOptions = exports.dataBinderOptions = {
-	getter         : null,
-	getterAsync    : false,
-	setter         : null,
-	validator      : null,
-	validatorAsync : false,
-	setterAsync    : false
-};
-
 /**
  Binds the query and update methods to a new object. When called these
  methods can skip the first parameter so that find(object, query) can just be called as find(query)

@@ -14,6 +14,20 @@ var probe = require( "./probe" );
 var sys = require( "lodash" );
 
 /**
+ * Identifies the properties that the binder expects
+ * @type {{getter: null, getterAsync: boolean, setter: null, validator: null, validatorAsync: boolean, setterAsync: boolean}}
+ * @private
+ */
+var dataBinderOptions = exports.dataBinderOptions = {
+	getter         : null,
+	getterAsync    : false,
+	setter         : null,
+	validator      : null,
+	validatorAsync : false,
+	setterAsync    : false
+};
+
+/**
  * You can unbind previously bound objects from here.
  *
  * @param {string} path The path that was bound using {@link module:documents/binder.bind}

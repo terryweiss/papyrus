@@ -10,7 +10,8 @@
 			"mixins/signalable.js",
 			"mixins/bussable.js",
 			"documents/probe.js",
-			"documents/binder.js"
+			"documents/binder.js",
+			"documents/model.js"
 		]
 	},
 	"plugins"   : [
