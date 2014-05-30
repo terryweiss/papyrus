@@ -4,13 +4,11 @@
  * that, it is a pure, in memory data container
  * @module documents/model
  * @require base
- * @require jjv
  * @require documents/probe
  * @require lodash
  */
 
 var Base = require( "../base" );
-var validator = require( "jjv" );
 var probe = require( "./probe" );
 var sys = require( "lodash" );
 /**

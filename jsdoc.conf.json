@@ -11,7 +11,8 @@
 			"mixins/bussable.js",
 			"documents/probe.js",
 			"documents/binder.js",
-			"documents/model.js"
+			"documents/model.js",
+			"documents/schema.js"
 		]
 	},
 	"plugins"   : [

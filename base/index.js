@@ -20,12 +20,7 @@ var chains = require( "./chains" );
  * @extends base/chains
  */
 var Base = dcl( [chains], /** @lends base# */{
-	declaredClass : "Base",
-
-	constructor : function () {
-		this.log.trace( this.declaredClass, "constructor" );
-	},
-
+	declaredClass     : "Base",
 	/**
 	 * Add an option to a class. If any members of the hash already exist in `this.options`, they will be overwritten.
 	 * @param {hash} options A hash of options you want to set
