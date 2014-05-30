@@ -35,6 +35,7 @@ var Model = Base.compose( [Base], /** @lends documents/model# */{
 	constructor : function () {
 		var that = this;
 		probe.mixin( this );
+
 		var idField = "_id";
 		/**
 		 * The name of the field that uniquely identifies a record. When provided, some operations will take advantage of it
