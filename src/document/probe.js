@@ -2,7 +2,7 @@
 /**
  @fileOverview Queries objects in memory using a mongo-like notation for reaching into objects and filtering for records
 
- @module documents/probe
+ @module document/probe
  @author Terry Weiss
  @license MIT
  @requires lodash
@@ -226,9 +226,9 @@ function pushin( path, record, setter, newValue ) {
 				 * Increments a field by the amount you specify. It takes the form
 				 * `{ $inc: { field1: amount } }`
 				 * @name $inc
-				 * @memberOf module:documents/probe.updateOperators
+				 * @memberOf module:document/probe.updateOperators
 				 * @example
-				 * var probe = require("documents/probe");
+				 * var probe = require("document/probe");
 				 * probe.update( obj, {'name.last' : 'Owen', 'name.first' : 'LeRoy'},
 				 * {$inc : {'password.changes' : 2}} );
 				 */
@@ -246,9 +246,9 @@ function pushin( path, record, setter, newValue ) {
 				 * Decrements a field by the amount you specify. It takes the form
 				 * `{ $dec: { field1: amount }`
                  * @name $dec
-				 * @memberOf module:documents/probe.updateOperators
+				 * @memberOf module:document/probe.updateOperators
 				 * @example
-				 *  var probe = require("documents/probe");
+				 *  var probe = require("document/probe");
 				 * probe.update( obj, {'name.last' : 'Owen', 'name.first' : 'LeRoy'},
 				 * {$dec : {'password.changes' : 2}} );
 				 */
@@ -266,9 +266,9 @@ function pushin( path, record, setter, newValue ) {
 				 * Removes the field from the object. It takes the form
 				 * `{ $unset: { field1: "" } }`
 				 * @name $unset
-				 * @memberOf module:documents/probe.updateOperators
+				 * @memberOf module:document/probe.updateOperators
 				 * @example
-				 * var probe = require("documents/probe");
+				 * var probe = require("document/probe");
 				 * probe.update( data, {'name.first' : 'Yogi'}, {$unset : {'name.first' : ''}} );
 				 */
 
@@ -279,9 +279,9 @@ function pushin( path, record, setter, newValue ) {
 				 * in an array and a value of -1 to remove the first element of an array. This will only work on arrays. Syntax:
 				 * `{ $pop: { field: 1 } }` or `{ $pop: { field: -1 } }`
 				 * @name $pop
-				 * @memberOf module:documents/probe.updateOperators
+				 * @memberOf module:document/probe.updateOperators
 				 * @example
-				 * var probe = require("documents/probe");
+				 * var probe = require("document/probe");
 				 * // attr is the name of the array field
 				 * probe.update( data, {_id : '511d18827da2b88b09000133'}, {$pop : {attr : 1}} );
 				 */
@@ -302,9 +302,9 @@ function pushin( path, record, setter, newValue ) {
 				 * The $push operator appends a specified value to an array. It looks like this:
 				 * `{ $push: { <field>: <value> } }`
 				 * @name $push
-				 * @memberOf module:documents/probe.updateOperators
+				 * @memberOf module:document/probe.updateOperators
 				 * @example
-				 * var probe = require("documents/probe");
+				 * var probe = require("document/probe");
 				 * // attr is the name of the array field
 				 * probe.update( data, {_id : '511d18827da2b88b09000133'},
 				 * {$push : {attr : {"hand" : "new", "color" : "new"}}} );
@@ -319,9 +319,9 @@ function pushin( path, record, setter, newValue ) {
 				 * The $pull operator removes all instances of a value from an existing array. It looks like this:
 				 * `{ $pull: { field: <query> } }`
 				 * @name $pull
-				 * @memberOf module:documents/probe.updateOperators
+				 * @memberOf module:document/probe.updateOperators
 				 * @example
-				 * var probe = require("documents/probe");
+				 * var probe = require("document/probe");
 				 * // attr is the name of the array field
 				 * probe.update( data, {'email' : 'EWallace.43@fauxprisons.com'},
 				 * {$pull : {attr : {"color" : "green"}}} );
@@ -349,9 +349,9 @@ var operations = {
 	 * otherwise if it is an array, it checks to see if the value looked for is in the array.
 	 * `{field: value}` or `{field: {$eq : value}}` or `{array: value}` or `{array: {$eq : value}}`
 	 * @name $eq
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {categories : "cat1"} );
 	 * // is the same as
 	 * probe.find( data, {categories : {$eq: "cat1"}} );
@@ -371,9 +371,9 @@ var operations = {
 	 * this is performs a "not in array".
 	 * '{field: {$ne : value}}` or '{array: {$ne : value}}`
 	 * @name $ne
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"name.first" : {$ne : "Sheryl"}} );
 	 */
 
@@ -390,9 +390,9 @@ var operations = {
 	 * `$all` checks to see if all of the members of the query are included in an array
 	 * `{array: {$all: [val1, val2, val3]}}`
 	 * @name $all
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"categories" : {$all : ["cat4", "cat2", "cat1"]}} );
 	 */
 
@@ -410,9 +410,9 @@ var operations = {
 	 * `$gt` Sees if a field is greater than the value
 	 * `{field: {$gt: value}}`
 	 * @name $gt
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"age" : {$gt : 24}} );
 	 */
 
@@ -423,9 +423,9 @@ var operations = {
 	 * `$gte` Sees if a field is greater than or equal to the value
 	 * `{field: {$gte: value}}`
 	 * @name $gte
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"age" : {$gte : 50}} );
 	 */
 
@@ -436,9 +436,9 @@ var operations = {
 	 * `$lt` Sees if a field is less than the value
 	 * `{field: {$lt: value}}`
 	 * @name $lt
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"age" : {$lt : 24}} );
 	 */
 
@@ -449,9 +449,9 @@ var operations = {
 	 * `$lte` Sees if a field is less than or equal to the value
 	 * `{field: {$lte: value}}`
 	 * @name $lte
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"age" : {$lte : 50}} );
 	 */
 
@@ -462,9 +462,9 @@ var operations = {
 	 * `$in` Sees if a field has one of the values in the query
 	 * `{field: {$in: [test1, test2, test3,...]}}`
 	 * @name $in
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"age" : {$in : [24, 28, 60]}} );
 	 */
 
@@ -478,9 +478,9 @@ var operations = {
 	 * `$nin` Sees if a field has none of the values in the query
 	 * `{field: {$nin: [test1, test2, test3,...]}}`
 	 * @name $nin
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"age" : {$nin : [24, 28, 60]}} );
 	 */
 
@@ -494,9 +494,9 @@ var operations = {
 	 * `$exists` Sees if a field exists.
 	 * `{field: {$exists: true|false}}`
 	 * @name $exists
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"name.middle" : {$exists : true}} );
 	 */
 
@@ -507,9 +507,9 @@ var operations = {
 	 * Checks equality to a modulus operation on a field
 	 * `{field: {$mod: [divisor, remainder]}}`
 	 * @name $mod
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"age" : {$mod : [2, 0]}} );
 	 */
 
@@ -526,9 +526,9 @@ var operations = {
 	 * Compares the size of the field/array to the query. This can be used on arrays, strings and objects (where it will count keys)
 	 * `{'field|array`: {$size: value}}`
 	 * @name $size
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {attr : {$size : 3}} );
 	 */
 
@@ -539,9 +539,9 @@ var operations = {
 	 * Performs a regular expression test againts the field
 	 * `{field: {$regex: re, $options: reOptions}}`
 	 * @name $regex
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {"name.first" : {$regex : "m*", $options : "i"}} );
 	 */
 
@@ -554,9 +554,9 @@ var operations = {
 	 * of the conditions of the query
 	 * `{array: {$elemMatch: {path: value, path: {$operation: value2}}}`
      * @name $elemMatch
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {attr : {$elemMatch : [
      *  {color : "red", "hand" : "left"}
      * ]}} );
@@ -580,9 +580,9 @@ var operations = {
 	 * Returns true if all of the conditions of the query are met
 	 * `{$and: [query1, query2, query3]}`
 	 * @name $and
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {$and : [
      *      {"name.first" : "Mildred"},
      *      {"name.last" : "Graves"}
@@ -609,9 +609,9 @@ var operations = {
 	 * Returns true if any of the conditions of the query are met
 	 * `{$or: [query1, query2, query3]}`
 	 * @name $or
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {$or : [
      *      "age" : {$in : [24, 28, 60]}},
 	 *      {categories : "cat1"}
@@ -636,9 +636,9 @@ var operations = {
 	 * Returns true if none of the conditions of the query are met
 	 * `{$nor: [query1, query2, query3]}`
 	 * @name $nor
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {$nor : [
      *      {"age" : {$in : [24, 28, 60]}},
      *      {categories : "cat1"}
@@ -663,9 +663,9 @@ var operations = {
 	 * Logical NOT on the conditions of the query
 	 * `{$not: [query1, query2, query3]}`
 	 * @name $not
-	 * @memberOf module:documents/probe.queryOperators
+	 * @memberOf module:document/probe.queryOperators
 	 * @example
-	 * var probe = require("documents/probe");
+	 * var probe = require("document/probe");
 	 * probe.find( data, {$not : {"age" : {$lt : 24}}} );
 	 */
 	$not       : function ( qu, value, record ) {
@@ -726,10 +726,10 @@ function execQuery( obj, qu, shortCircuit, stopOnFirst ) {
 }
 
 /**
- Updates all records in obj that match the query. See {@link module:documents/probe.updateOperators} for the operators that are supported.
+ Updates all records in obj that match the query. See {@link module:document/probe.updateOperators} for the operators that are supported.
  @param {object|array} obj The object to update
  @param {object} qu The query which will be used to identify the records to updated
- @param {object} setDocument The update operator. See {@link module:documents/probe.updateOperators}
+ @param {object} setDocument The update operator. See {@link module:document/probe.updateOperators}
  */
 exports.update = function ( obj, qu, setDocument ) {
 	var records = exports.find( obj, qu );
@@ -744,7 +744,7 @@ exports.update = function ( obj, qu, setDocument ) {
 /**
  Find all records that match a query
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @returns {array} The results
  **/
 exports.find = function ( obj, qu ) {
@@ -760,10 +760,10 @@ exports.find = function ( obj, qu ) {
 	return execQuery( obj, query ).arrayResults;
 };
 /**
- Find all records that match a query and returns the keys for those items. This is similar to {@link module:documents/probe.find} but instead of returning
+ Find all records that match a query and returns the keys for those items. This is similar to {@link module:document/probe.find} but instead of returning
  records, returns the keys. If `obj` is an object it will return the hash key. If 'obj' is an array, it will return the index
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @returns {array}
  */
 exports.findKeys = function ( obj, qu ) {
@@ -782,7 +782,7 @@ exports.findKeys = function ( obj, qu ) {
 /**
  Returns the first record that matches the query. Aliased as `seek`.
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @returns {object}
  */
 exports.findOne = function ( obj, qu ) {
@@ -807,7 +807,7 @@ exports.seek = exports.findOne;
  Returns the first record that matches the query and returns its key or index depending on whether `obj` is an object or array respectively.
  Aliased as `seekKey`.
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @returns {object}
  */
 exports.findOneKey = function ( obj, qu ) {
@@ -832,7 +832,7 @@ exports.seekKey = exports.findOneKey;
 /**
  Remove all items in the object/array that match the query
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @return {object|array} The array or object as appropriate without the records.
  **/
 exports.remove = function ( obj, qu ) {
@@ -865,7 +865,7 @@ exports.remove = function ( obj, qu ) {
  Returns true if all items match the query
 
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @returns {boolean}
  **/
 exports.all = function ( obj, qu ) {
@@ -876,7 +876,7 @@ exports.all = function ( obj, qu ) {
  Returns true if any of the items match the query
 
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @returns {boolean}
  **/
 exports.any = function ( obj, qu ) {
@@ -896,7 +896,7 @@ exports.any = function ( obj, qu ) {
 /**
  Returns the set of unique records that match a query
  @param {array|object} obj The object to query
- @param {object} qu The query to execute. See {@link module:documents/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @return {array}
  **/
 exports.unique = function ( obj, qu ) {
@@ -912,7 +912,7 @@ exports.unique = function ( obj, qu ) {
 
  @param {array} path The split path of the element to work with
  @param {object} record The record to reach into
- @param {string} setter The set operation.  See {@link module:documents/probe.updateOperators} for the operators you can use.
+ @param {string} setter The set operation.  See {@link module:document/probe.updateOperators} for the operators you can use.
  @param {object} newValue The value to write to the, or if the operator is $pull, the query of items to look for
  */
 exports.set = function ( record, path, setter, newValue ) {
@@ -999,7 +999,7 @@ exports.mixin = function ( obj, collection ) {
 /**
  * These are the supported query operators
  *
- * @memberOf module:documents/probe
+ * @memberOf module:document/probe
  * @name queryOperators
  * @class This is not actually a class, but an artifact of the documentation system
  */
@@ -1007,7 +1007,7 @@ exports.mixin = function ( obj, collection ) {
 /**
  * These are the supported update operators
  *
- * @memberOf module:documents/probe
+ * @memberOf module:document/probe
  * @name updateOperators
  * @class This is not actually a class, but an artifact of the documentation system
  */

@@ -1,14 +1,25 @@
 "use strict";
+/**
+ * @fileOverview Tools to integrate and compose objects
+ * @module utils/construct
+ */
 var sys = require( "lodash" );
 var dcl = require( "dcl" );
-
-exports.mix = function ( C, obj ) {
-	if ( sys.isFunction( obj ) ) {
-		return dcl( [obj, C], {} );
-	} else {
-		var instance = new C();
-		return sys.extend( obj, instance );
-	}
+/**
+ * Mixes one thing into another
+ * @param {function|object} Source The thing to mixin into the `target`. This can
+ * be an object or a class. If a class, `Source` is added to `target`'s prototype.
+ * @param target
+ * @returns {*}
+ */
+exports.mix = function ( Source, target ) {
+//	if ( sys.isFunction( target ) ) {
+//		return dcl( [target, Source], {} );
+//	} else {
+//		var instance
+//		instance = new Source();
+//		return sys.extend( target, instance );
+//	}
 };
 
 exports.safeMix = function ( C, obj ) {

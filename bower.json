@@ -1,0 +1,22 @@
+{
+	"name"         : "Papyrus",
+	"version"      : "0.0.0",
+	"homepage"     : "https://github.com/terryweiss/papyrus",
+	"author"       : {
+		"name"  : "Terry Weiss",
+		"email" : "me@terryweiss.net"
+	},
+	"description"  : "A library of useful tools and conventions to make shared client and server code a possibility",
+	"license"      : "MIT",
+	"ignore"       : [
+		"node_modules",
+		"bower_components",
+		"etc",
+		"dox"
+	],
+	"dependencies" : {
+		"jquery"                : "~2.1.1",
+		"responsiveboilerplate" : "~2.3.2",
+		"jqueryui"              : "~1.10.4"
+	}
+}

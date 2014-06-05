@@ -5,13 +5,15 @@
  * @module mixins/signalable
  * @requires base
  * @requires signals
+ * @requires async
  * @requires base/logger
  */
 
-var Base = require( "../base" );
+var Base = require( "../base/index" );
 var signals = require( 'signals' );
 var format = require( "../strings/format" );
 var sys = require( "lodash" );
+var async = require( "async" );
 
 /**
  * @typedef
@@ -54,10 +56,10 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 	declaredClass : "mixins/Signal",
 
 	constructor : function ( host, name, options ) {
-		options = options || {};
+		this.options = options = options || {};
 		this.memorize = options.memorize === true;
 		this.host = host;
-		this.trigger = this.fire = this.raise = this.dispatch;
+//		this.trigger = this.fire = this.raise = this.dispatch;
 		this.name = name || sys.uniqueId( "signal" );
 		this.params = options.params;
 		this.defaultContext = options.context;
@@ -74,21 +76,88 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 	},
 
 	/**
+	 * Fire an event that may potentially execute asynchronously
+	 */
+	fire : function () {
+		if ( !this.active ) {return;}
+
+		var params = sys.toArray( arguments );
+		var paramsArr = sys.initial( params );
+		var n = this._bindings.length;
+		var bindings = this._bindings.slice(); //clone array in case add/remove items during dispatch
+		var callback = params.length > 0 ? sys.last( params ) : null;
+		this._shouldPropagate = true; //in case `halt` was called before dispatch or during the previous dispatch.
+
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+			paramsArr = params;
+		}
+		if ( this.memorize ) {
+			this._prevParams = paramsArr;
+		}
+
+		if ( !n ) {
+			//should come after memorize
+			return;
+		}
+
+		var that = this;
+		//execute all callbacks until end of the list or until a callback returns `false` or stops propagation
+		//reverse loop since listeners with higher priority will be added at the end of the list
+		async.doWhilst( function ( done ) {
+			n--;
+			if ( bindings[n] ) {
+				if ( bindings[n].async ) {
+					var p = paramsArr.slice();
+					p.push( done );
+					bindings[n].execute( p );
+				} else {
+					var res = bindings[n].execute( paramsArr );
+					if ( res === false ) {
+						return done( new Error( "canceled" ) );
+					}
+					return done();
+				}
+			} else {
+				return done();
+			}
+		}, function ( done ) {
+			return bindings[n] && that._shouldPropagate;
+		}, callback );
+
+//		do { n--; } while ( bindings[n] && this._shouldPropagate && bindings[n].execute( paramsArr ) !== false );
+	},
+
+	/**
 	 * Ties a listener to a signal.
 	 * @param {function} listener The function to call when the signal is raised
 	 * @param {?object} listenerContext A context to set for the listener. The event host may set a default for this value, but you may override that here.
-	 * @param {?number} priority A priority for the listener.
+	 * @param {?number|string} priority A priority for the listener. Or the string `"async"`
 	 * @returns {SignalBinding}
 	 */
 	on       : function ( listener, listenerContext, priority ) {
+		var isAsync = false;
 		if ( sys.isNumber( listenerContext ) ) {
 			priority = listenerContext;
 			listenerContext = null;
 		}
+		if ( sys.isString( listenerContext ) ) {
+			priority = listenerContext;
+			listenerContext = null;
+		}
+		if ( sys.isString( priority ) ) {
+			isAsync = true;
+			priority = null;
+		}
 		listenerContext = listenerContext || this.defaultContext || this.host;
 		var binding = this.add( listener, listenerContext, priority );
 		if ( this.options.params ) {
-			binding.params = this.arams;
+			binding.params = this.params;
+		}
+		if ( isAsync ) {
+			binding.async = true;
+		} else {
+			binding.async = false;
 		}
 		return binding;
 	},
@@ -100,14 +169,28 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 	 * @returns {SignalBinding}
 	 */
 	once     : function ( listener, listenerContext, priority ) {
+		var isAsync = false;
 		if ( sys.isNumber( listenerContext ) ) {
 			priority = listenerContext;
 			listenerContext = null;
+		}
+		if ( sys.isString( listenerContext ) ) {
+			priority = listenerContext;
+			listenerContext = null;
+		}
+		if ( sys.isString( priority ) ) {
+			isAsync = true;
+			priority = null;
 		}
 		listenerContext = listenerContext || this.defaultContext || this.host;
 		var binding = this.addOnce( listener, listenerContext, priority );
 		if ( this.options.params ) {
 			binding.params = this.params;
+		}
+		if ( isAsync ) {
+			binding.async = true;
+		} else {
+			binding.async = false;
 		}
 		return binding;
 	},
@@ -153,12 +236,13 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 	declaredClass : "mixins/Signalable",
 
-	constructor    : function () {
+	constructor : function () {
 		this.autoLoadSignals = this.autoLoadSignals || true;
 		if ( this.autoLoadSignals === true ) {
 			this._loadSignals();
 		}
 	},
+
 	/**
 	 * When you make a change to the signals hash after loading, then you can make it reload
 	 */
@@ -207,6 +291,9 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 	 */
 	_addSignals : function ( signals ) {
 		signals = signals || {};
+		sys.each( signals, function ( val, key ) {
+			this._addSignal( key, val );
+		}, this );
 		if ( this.options ) {signals = sys.extend( {}, sys.result( this, 'signals' ), signals );}
 		this.signals = signals;
 	},
@@ -221,10 +308,11 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 			}
 		}, this );
 	}
+
 } );
 
 module.exports = Signalable;
-alable.Signal = Signal;
+Signalable.Signal = Signal;
 Signalable.mixin = Base.mixin;
 
 /**

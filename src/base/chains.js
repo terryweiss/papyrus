@@ -57,5 +57,13 @@ dcl.chainBefore( Chains, "destroy" );
  * @see base/chains#close
  */
 dcl.chainAfter( Chains, "open" );
-
+/**
+ * The `start` method will initialize the object such that is can be opened, if construction was not sufficient to the task. The
+ * [end method]{@link base/chains#end} asks an object to shut itself down in a way that prepares it for destruction.
+ *
+ * This uses the `after` chain which means the last one defined in the first one destroyed
+ * @memberOf base/chains#
+ * @name start
+ */
+dcl.chainAfter( Chains, "start" );
 module.exports = Chains;

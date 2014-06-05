@@ -4,15 +4,13 @@
 	},
 	"source"    : {
 		"include" : [
-			"base/chains.js", "base/index.js",
-			"utils/logger.js",
-			"strings/format.js",
-			"mixins/signalable.js",
-			"mixins/bussable.js",
-			"documents/probe.js",
-			"documents/binder.js",
-			"documents/model.js",
-			"documents/schema.js"
+			"src/base/",
+			"src/utils/",
+			"src/strings/",
+			"src/mixins/",
+			"src/document/",
+			"src/view/",
+			"src/application/client.js"
 		]
 	},
 	"plugins"   : [
@@ -24,9 +22,9 @@
 		"dateFormat"            : "ddd MMM Do YYYY",
 		"outputSourceFiles"     : true,
 		"outputSourcePath"      : true,
-		"systemName"            : "DocStrap",
+		"systemName"            : "Papyrus",
 		"footer"                : "",
-		"copyright"             : "DocStrap Copyright © 2012-2013 The contributors to the JSDoc3 and DocStrap projects.",
+		"copyright"             : "Papyrus copyright ©2014 Terry Weiss. All rights reserved.",
 		"navType"               : "vertical",
 		"theme"                 : "cerulean",
 		"linenums"              : true,

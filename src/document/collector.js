@@ -30,7 +30,7 @@ var CollectorBase = dcl( Destroyable, {
 		 * Get the size of the collection
 		 * @name length
 		 * @type {number}
-		 * @memberOf module:documents/collector~CollectorBase#
+		 * @memberOf module:document/collector~CollectorBase#
 		 */
 		Object.defineProperty( this, "length", {
 				get : function () {
@@ -42,7 +42,7 @@ var CollectorBase = dcl( Destroyable, {
 		 * Creates an array of shuffled array values, using a version of the Fisher-Yates shuffle.
 		 * See http://en.wikipedia.org/wiki/Fisher-Yates_shuffle.
 		 * @function
-		 * @memberOf module:documents/collector~CollectorBase#
+		 * @memberOf module:document/collector~CollectorBase#
 		 * @returns {array}
 		 */
 		this.shuffle = sys.bind( sys.shuffle, this, this.heap );
@@ -245,7 +245,7 @@ var CollectorBase = dcl( Destroyable, {
 
 /**
  * An object based collector
- * @extends module:documents/collector~CollectorBase
+ * @extends module:document/collector~CollectorBase
  * @constructor
  */
 var OCollector = dcl( CollectorBase, {
@@ -262,7 +262,7 @@ var OCollector = dcl( CollectorBase, {
 //noinspection JSCommentMatchesSignature
 /**
  An array based collector
- @extends module:documents/collector~CollectorBase
+ @extends module:document/collector~CollectorBase
  @constructor
  */
 var ACollector = dcl( CollectorBase, {
@@ -383,7 +383,7 @@ exports.object = function ( obj ) {
  @param {object} qu The query to execute
  @returns {boolean}
  @name every
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  */
 
 
@@ -393,7 +393,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute
  @returns {boolean}
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name some
  */
 
@@ -403,7 +403,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute.
  @return {array}
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name unique
  @method
  **/
@@ -415,7 +415,7 @@ exports.object = function ( obj ) {
  @param {object} qu The query to execute
  @returns {boolean}
  @name all
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  */
 
 
@@ -425,7 +425,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute
  @returns {boolean}
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name any
  */
 
@@ -435,7 +435,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute. See {@link module:ink/probe.queryOperators} for the operators you can use.
  @return {object|array} The array or object as appropriate without the records.
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name remove
  @method
  **/
@@ -446,7 +446,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute.
  @returns {object}
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name findOneKey
  @method
  */
@@ -457,7 +457,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute.
  @returns {object}
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name findOne
  @method
  */
@@ -469,7 +469,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute.
  @returns {array}
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name findKeys
  @method
  */
@@ -480,7 +480,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query to execute.
  @returns {array} The results
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name find
  @method
  **/
@@ -490,7 +490,7 @@ exports.object = function ( obj ) {
 
  @param {object} qu The query which will be used to identify the records to updated
  @param {object} setDocument The update operator. See {@link module:ink/probe.updateOperators}
- @memberOf module:documents/collector~CollectorBase#
+ @memberOf module:document/collector~CollectorBase#
  @name update
  @method
  */

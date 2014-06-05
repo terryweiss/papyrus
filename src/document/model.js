@@ -2,34 +2,34 @@
 /**
  * @fileOverview A model is the first level if usable data-bearing entity in the system. It does NOT include any verbs for saving or anything like
  * that, it is a pure, in memory data container
- * @module documents/model
+ * @module document/model
  * @require base
- * @require documents/probe
+ * @require document/probe
  * @require lodash
  */
 
-var Base = require( "../base" );
+var Base = require( "../base/index" );
 var probe = require( "./probe" );
 var sys = require( "lodash" );
 /**
  * A model is the first level if usable data-bearing entity in the system. It does NOT include any verbs for saving or anything like
  * that, it is a pure, in memory data container
- * @exports documents/model
+ * @exports document/model
  * @constructor
- * @borrows module:documents/probe.get as get
- * @borrows module:documents/probe.set as set
- * @borrows module:documents/probe.any as any
- * @borrows module:documents/probe.all as all
- * @borrows module:documents/probe.remove as remove
- * @borrows module:documents/probe.seekKey as seekKey
- * @borrows module:documents/probe.seek as seek
- * @borrows module:documents/probe.findOne as findOne
- * @borrows module:documents/probe.findOneKey as findOneKey
- * @borrows module:documents/probe.findKeys as findKeys
- * @borrows module:documents/probe.find as find
- * @borrows module:documents/probe.update as update
- * @borrows module:documents/probe.some as some
- * @borrows module:documents/probe.every as every
+ * @borrows module:document/probe.get as get
+ * @borrows module:document/probe.set as set
+ * @borrows module:document/probe.any as any
+ * @borrows module:document/probe.all as all
+ * @borrows module:document/probe.remove as remove
+ * @borrows module:document/probe.seekKey as seekKey
+ * @borrows module:document/probe.seek as seek
+ * @borrows module:document/probe.findOne as findOne
+ * @borrows module:document/probe.findOneKey as findOneKey
+ * @borrows module:document/probe.findKeys as findKeys
+ * @borrows module:document/probe.find as find
+ * @borrows module:document/probe.update as update
+ * @borrows module:document/probe.some as some
+ * @borrows module:document/probe.every as every
  */
 var Model = Base.compose( [Base], /** @lends documents/model# */{
 	constructor : function () {

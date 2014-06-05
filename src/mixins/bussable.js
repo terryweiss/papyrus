@@ -7,7 +7,7 @@
  * @requires base
  */
 var bus = require( "postal" );
-var Base = require( "../base" );
+var Base = require( "../base/index" );
 var sys = require( "lodash" );
 
 /**

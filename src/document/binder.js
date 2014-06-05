@@ -2,9 +2,9 @@
 /**
  * @fileOverview allows you to bind a change watcher that looks for get and set operations on an arbitrary
  * property of an object at at any depth. This allows you to look for changes or intercept values asynchronously or otherwise.
- * @module documents/binder
+ * @module document/binder
  * @requires async
- * @requires documents/probe
+ * @requires document/probe
  * @requires lodash
  * @requires promise
  */
@@ -30,7 +30,7 @@ var dataBinderOptions = exports.dataBinderOptions = {
 /**
  * You can unbind previously bound objects from here.
  *
- * @param {string} path The path that was bound using {@link module:documents/binder.bind}
+ * @param {string} path The path that was bound using {@link module:document/binder.bind}
  * @param {*} record The object that was bound
  */
 exports.unbind = function ( path, record ) {

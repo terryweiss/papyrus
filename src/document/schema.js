@@ -1,17 +1,17 @@
 "use strict";
 /**
  * @fileOverview Enables a schema and validation feature set to your document or other object.
- * @module documents/schema
+ * @module document/schema
  * @requires base
  * @requires jjv
  * @require lodash
  */
 var sys = require( "lodash" );
 var Validator = require( "jjv" );
-var Base = require( "../base" );
+var Base = require( "../base/index" );
 /**
  * The validator mixin provides access to the features of the JSON validation system
- * @exports documents/schema
+ * @exports document/schema
  * @mixin
  */
 var Schema = Base.compose( [Base], /** @lends documents/schema# */{
