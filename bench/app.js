@@ -8992,6 +8992,9 @@
 			this.host = null;
 		},
 
+		/**
+		 * Fire an event that may potentially execute asynchronously
+		 */
 		fire : function () {
 			if ( !this.active ) {return;}
 
@@ -9643,32 +9646,5 @@
 		 */
 		"shown"    : {val : 40, nextStateUp : "interactive", nextStateDown : "rendered", upOp : "show", downOp : "hide", name : "shown"}
 	};
-
-//var sortA = (function () {
-//	var props = {};
-//	sys.each( viewStates, function ( val, key ) {
-//		if ( !sys.isFunction( val ) ) {
-//			props[key] = val;
-//		}
-//	} );
-//	return sys.sortBy( props, function ( val ) {
-//		return val.val;
-//	} );
-//})();
-//var sortD = (function () {
-//	var props = {};
-//	sys.each( viewStates, function ( val, key ) {
-//		if ( !sys.isFunction( val ) ) {
-//			props[key] = val;
-//		}
-//	} );
-//	return sys.sortBy( props, function ( val ) {return val.val;} ).reverse();
-//})();
-//viewStates.sortedDesc = sortD
-//viewStates.sortedAsc = sortA;
-//
-//
-	var b = new View();
-	b.viewState = 10;
 
 }, {"../base" : 8, "../mixins/signalable" : 9, "async" : 1, "lodash" : 5}]}, {}, [11] )
