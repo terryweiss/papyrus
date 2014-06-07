@@ -44,6 +44,10 @@
 		</li>
 
 		<li>
+			<a href="collector.html">document/collector</a>
+		</li>
+
+		<li>
 			<a href="model__.html">document/model</a>
 		</li>
 
@@ -53,10 +57,6 @@
 
 		<li>
 			<a href="schema__.html">document/schema</a>
-		</li>
-
-		<li>
-			<a href="collector.html">ink/collector</a>
 		</li>
 
 		<li>
@@ -81,6 +81,14 @@
 
 		<li>
 			<a href="module-view.html">view</a>
+		</li>
+
+		<li>
+			<a href="presence.html">view/presence</a>
+		</li>
+
+		<li>
+			<a href="zone.html">view/zone</a>
 		</li>
 
 	</ul>
@@ -109,23 +117,23 @@
 		</li>
 
 		<li>
+			<a href="collector-ACollector.html">ACollector</a>
+		</li>
+
+		<li>
+			<a href="collector-CollectorBase.html">CollectorBase</a>
+		</li>
+
+		<li>
+			<a href="collector-OCollector.html">OCollector</a>
+		</li>
+
+		<li>
 			<a href="probe.queryOperators.html">queryOperators</a>
 		</li>
 
 		<li>
 			<a href="probe.updateOperators.html">updateOperators</a>
-		</li>
-
-		<li>
-			<a href="collector-ACollector.html">ACollector</a>
-		</li>
-
-		<li>
-			<a href="collector-CollectorBase_.html">CollectorBase</a>
-		</li>
-
-		<li>
-			<a href="collector-OCollector.html">OCollector</a>
 		</li>
 
 		<li>
@@ -159,6 +167,10 @@
 
 		<li>
 			<a href="signalable.html">mixins/signalable</a>
+		</li>
+
+		<li>
+			<a href="presence_.html">view/presence</a>
 		</li>
 
 	</ul>
@@ -234,6 +246,10 @@
 			<a href="module-view.View.html#event:viewUnrendered">viewUnrendered</a>
 		</li>
 
+		<li>
+			<a href="presence_.html#event:elChanged">elChanged</a>
+		</li>
+
 	</ul>
 </li>
 
@@ -242,6 +258,18 @@
 		class="caret"></b></a>
 
 	<ul class="dropdown-menu ">
+
+		<li>
+			<a href="global.html#difference">difference</a>
+		</li>
+
+		<li>
+			<a href="global.html#head">head</a>
+		</li>
+
+		<li>
+			<a href="global.html#tail">tail</a>
+		</li>
 
 		<li>
 			<a href="global.html#utils/logger">utils/logger</a>
@@ -272,6 +300,7 @@
  * @module mixins/signalable
  * @requires base
  * @requires signals
+ * @requires async
  * @requires base/logger
  */
 
@@ -279,6 +308,7 @@ var Base = require( "../base/index" );
 var signals = require( 'signals' );
 var format = require( "../strings/format" );
 var sys = require( "lodash" );
+var async = require( "async" );
 
 /**
  * @typedef
@@ -324,7 +354,7 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 		this.options = options = options || {};
 		this.memorize = options.memorize === true;
 		this.host = host;
-		this.trigger = this.fire = this.raise = this.dispatch;
+//		this.trigger = this.fire = this.raise = this.dispatch;
 		this.name = name || sys.uniqueId( "signal" );
 		this.params = options.params;
 		this.defaultContext = options.context;
@@ -341,21 +371,89 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 	},
 
 	/**
+	 * Fire an event that may potentially execute asynchronously
+	 */
+	fire : function () {
+		if ( !this.active ) {return;}
+
+		var params = sys.toArray( arguments );
+		var paramsArr = sys.initial( params );
+		var n = this._bindings.length;
+		var bindings = this._bindings.slice(); //clone array in case add/remove items during dispatch
+		var callback = params.length > 0 ? sys.last( params ) : null;
+		this._shouldPropagate = true; //in case `halt` was called before dispatch or during the previous dispatch.
+
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+			paramsArr = params;
+		}
+		if ( this.memorize ) {
+			this._prevParams = paramsArr;
+		}
+
+		if ( !n ) {
+			//should come after memorize
+			return;
+		}
+
+		var that = this;
+		//execute all callbacks until end of the list or until a callback returns `false` or stops propagation
+		//reverse loop since listeners with higher priority will be added at the end of the list
+		async.doWhilst( function ( done ) {
+			n--;
+			if ( bindings[n] ) {
+				if ( bindings[n].async ) {
+					var p = paramsArr.slice();
+					p.push( done );
+					bindings[n].execute( p );
+				} else {
+					var res = bindings[n].execute( paramsArr );
+					if ( res === false ) {
+						return done( new Error( "canceled" ) );
+					}
+					return done();
+				}
+
+			} else {
+				return done();
+			}
+		}, function ( done ) {
+			return bindings[n] &amp;&amp; that._shouldPropagate;
+		}, callback );
+
+//		do { n--; } while ( bindings[n] &amp;&amp; this._shouldPropagate &amp;&amp; bindings[n].execute( paramsArr ) !== false );
+	},
+
+	/**
 	 * Ties a listener to a signal.
 	 * @param {function} listener The function to call when the signal is raised
 	 * @param {?object} listenerContext A context to set for the listener. The event host may set a default for this value, but you may override that here.
-	 * @param {?number} priority A priority for the listener.
+	 * @param {?number|string} priority A priority for the listener. Or the string `"async"`
 	 * @returns {SignalBinding}
 	 */
 	on       : function ( listener, listenerContext, priority ) {
+		var isAsync = false;
 		if ( sys.isNumber( listenerContext ) ) {
 			priority = listenerContext;
 			listenerContext = null;
 		}
+		if ( sys.isString( listenerContext ) ) {
+			priority = listenerContext;
+			listenerContext = null;
+		}
+		if ( sys.isString( priority ) ) {
+			isAsync = true;
+			priority = null;
+		}
 		listenerContext = listenerContext || this.defaultContext || this.host;
 		var binding = this.add( listener, listenerContext, priority );
 		if ( this.options.params ) {
-			binding.params = this.arams;
+			binding.params = this.params;
+		}
+		if ( isAsync ) {
+			binding.async = true;
+		} else {
+			binding.async = false;
 		}
 		return binding;
 	},
@@ -367,14 +465,28 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 	 * @returns {SignalBinding}
 	 */
 	once     : function ( listener, listenerContext, priority ) {
+		var isAsync = false;
 		if ( sys.isNumber( listenerContext ) ) {
 			priority = listenerContext;
 			listenerContext = null;
+		}
+		if ( sys.isString( listenerContext ) ) {
+			priority = listenerContext;
+			listenerContext = null;
+		}
+		if ( sys.isString( priority ) ) {
+			isAsync = true;
+			priority = null;
 		}
 		listenerContext = listenerContext || this.defaultContext || this.host;
 		var binding = this.addOnce( listener, listenerContext, priority );
 		if ( this.options.params ) {
 			binding.params = this.params;
+		}
+		if ( isAsync ) {
+			binding.async = true;
+		} else {
+			binding.async = false;
 		}
 		return binding;
 	},
@@ -408,7 +520,6 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 			this.getNumListeners()
 		);
 	}
-
 } );
 
 /**
@@ -420,7 +531,7 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 	declaredClass : "mixins/Signalable",
 
-	constructor    : function () {
+	constructor : function () {
 		this.autoLoadSignals = this.autoLoadSignals || true;
 		if ( this.autoLoadSignals === true ) {
 			this._loadSignals();
@@ -456,11 +567,12 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 			this._addSignal( key, opts );
 		} );
 	},
+
 	/**
 	 * Creates a single signal
 	 * @param {string} name The name of the signal
 	 * @param {module:mixins/signalable~SignalOptions} options The options the signal expects
-	 * @private
+	 * @protected
 	 */
 	_addSignal   : function ( name, options ) {
 		if ( sys.isEmpty( this[name] ) ) {
@@ -471,13 +583,13 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 	/**
 	 * Add a signal to an object. If any members of the hash already exist in `this.signals`, they will be overwritten.
 	 * @param {module:mixins/signalable.SignalOptions} signals
-	 * @private
+	 * @protected
 	 */
 	_addSignals : function ( signals ) {
 		signals = signals || {};
-		sys.each( signals, function (val, key) {
-			   this._addSignal(key, val);
-		}, this);
+		sys.each( signals, function ( val, key ) {
+			this._addSignal( key, val );
+		}, this );
 		if ( this.options ) {signals = sys.extend( {}, sys.result( this, 'signals' ), signals );}
 		this.signals = signals;
 	},
@@ -491,7 +603,38 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 				this[key].close();
 			}
 		}, this );
+	},
+	/**
+	 * Request cascade for a signal. NOT READY FOR PRIMETIME!!!!
+	 *
+	 * @param {string} name The name of the event to cascade
+	 * @param {...*} params An *array* of params to pass
+	 * @param {number=} depth How deep the cascade should go.
+	 * @protected
+	 */
+	_cascadeSignal : function ( name, params, depth ) {
+		depth = depth || 20;
+		var that = this;
+
+		cascade(that);
+
+		function cascade( parent ) {
+			if ( depth === 0 ) {return false;}
+
+			sys.each( parent, function ( val, key ) {
+				if ( !sys.isEmpty( val ) &amp;&amp; sys.isObject( val ) ) {
+					if ( val instanceof Signal &amp;&amp; val === parent[name] ) {
+						sys.bind( parent[name].fire, parent, params )( that );
+					} else if ( !(val instanceof Signal) ) {
+						cascade( val );
+					}
+				}
+
+			} );
+			depth--;
+		}
 	}
+
 } );
 
 module.exports = Signalable;
@@ -531,7 +674,7 @@ Signalable.mixin = Base.mixin;
 
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Tue Jun 3rd 2014 using the <a
+		on Sat Jun 7th 2014 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 </footer>

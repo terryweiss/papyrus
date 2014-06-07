@@ -43,7 +43,7 @@ var Model = Base.compose( [Base], /** @lends documents/model# */{
 		 * @name _idField
 		 * @memberOf  documents/model#
 		 * @type {string}
-		 * @private
+		 * @protected
 		 */
 		Object.defineProperty( this, "_idField", {
 			get          : function () {
@@ -63,7 +63,7 @@ var Model = Base.compose( [Base], /** @lends documents/model# */{
 		 * @name _pkey
 		 * @memberOf  documents/model#
 		 * @type {*}
-		 * @private
+		 * @protected
 		 */
 		Object.defineProperty( this, "_pkey", {
 			get          : function () {

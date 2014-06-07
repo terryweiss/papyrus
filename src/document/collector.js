@@ -1,7 +1,7 @@
 "use strict";
 /**
  @fileOverview An object and array collector
- @module ink/collector
+ @module document/collector
  */
 
 var probe = require( "ink-probe" );
@@ -12,7 +12,7 @@ var dcl = require( "dcl" );
  * A collector
  * @constructor
  */
-var CollectorBase = dcl( Destroyable, {
+var CollectorBase = dcl( Destroyable, /** @lends module:document/collector~CollectorBase#*/ {
 	declaredClass : "CollectorBase",
 	constructor   : function ( obj ) {
 		var that = this;
@@ -21,11 +21,14 @@ var CollectorBase = dcl( Destroyable, {
 		}
 		/**
 		 * The collection that being managed
+		 * @memberOf module:document/collector~CollectorBase#
 		 * @type {object|array}
+		 * @name heap
+		 * @private
 		 */
-		this.heap = obj || {};
+		this._heap = obj || {};
 		// mixin the probe
-		probe.mixTo( this, this.heap );
+		probe.mixTo( this, this._heap );
 		/**
 		 * Get the size of the collection
 		 * @name length
@@ -34,7 +37,7 @@ var CollectorBase = dcl( Destroyable, {
 		 */
 		Object.defineProperty( this, "length", {
 				get : function () {
-					return sys.size( that.heap );
+					return sys.size( that._heap );
 				}
 			}
 		);
@@ -44,8 +47,9 @@ var CollectorBase = dcl( Destroyable, {
 		 * @function
 		 * @memberOf module:document/collector~CollectorBase#
 		 * @returns {array}
+		 * @name shuffle
 		 */
-		this.shuffle = sys.bind( sys.shuffle, this, this.heap );
+		this.shuffle = sys.bind( sys.shuffle, this, this._heap );
 
 	},
 	/**
@@ -54,7 +58,7 @@ var CollectorBase = dcl( Destroyable, {
 	 * @param {*} item The item to add to the collection. The item is not iterated so that you could add bundled items to the collection
 	 */
 	add           : function ( key, item ) {
-		this.heap[key] = item;
+		this._heap[key] = item;
 	},
 	/**
 	 * Iterate over each item in the collection, or a subset that matches a query. This supports two signatures:
@@ -70,7 +74,7 @@ var CollectorBase = dcl( Destroyable, {
 			sys.each( this.find( query ), iterator, thisobj );
 		} else {
 			thisobj = iterator || this;
-			sys.each( this.heap, query, thisobj );
+			sys.each( this._heap, query, thisobj );
 		}
 	},
 	/**
@@ -78,15 +82,15 @@ var CollectorBase = dcl( Destroyable, {
 	 * @return {array}
 	 */
 	toArray       : function () {
-		return sys.toArray( this.heap );
+		return sys.toArray( this._heap );
 	},
 	/**
 	 * Supports conversion to a JSON string or for passing over the wire
-	 * @return {object}
+	 *
 	 * @returns {Object|array}
 	 */
 	toJSON        : function () {
-		return this.heap;
+		return this._heap;
 	},
 	/**
 	 * Maps the contents to an array by iterating over it and transforming it. You supply the iterator. Supports two signatures:
@@ -102,7 +106,7 @@ var CollectorBase = dcl( Destroyable, {
 			return sys.map( this.find( query ), iterator, thisobj );
 		} else {
 			thisobj = iterator || this;
-			return sys.map( this.heap, query, thisobj );
+			return sys.map( this._heap, query, thisobj );
 		}
 	},
 	/**
@@ -122,7 +126,7 @@ var CollectorBase = dcl( Destroyable, {
 			return sys.reduce( this.find( query ), iterator, accumulator, thisobj );
 		} else {
 			thisobj = accumulator || this;
-			return  sys.reduce( this.heap, query, iterator, thisobj );
+			return  sys.reduce( this._heap, query, iterator, thisobj );
 		}
 	},
 	/**
@@ -141,7 +145,7 @@ var CollectorBase = dcl( Destroyable, {
 			return sys.countBy( this.find( query ), iterator, thisobj );
 		} else {
 			thisobj = iterator || this;
-			return sys.countBy( this.heap, query, thisobj );
+			return sys.countBy( this._heap, query, thisobj );
 		}
 	},
 	/**
@@ -160,7 +164,7 @@ var CollectorBase = dcl( Destroyable, {
 			return sys.groupBy( this.find( query ), iterator, thisobj );
 		} else {
 			thisobj = iterator || this;
-			return sys.groupBy( this.heap, query, thisobj );
+			return sys.groupBy( this._heap, query, thisobj );
 		}
 	},
 	/**
@@ -177,7 +181,7 @@ var CollectorBase = dcl( Destroyable, {
 				return probe.get( record, property );
 			} );
 		} else {
-			return sys.map( this.heap, function ( record ) {
+			return sys.map( this._heap, function ( record ) {
 				return probe.get( record, query );
 			} );
 		}
@@ -196,7 +200,7 @@ var CollectorBase = dcl( Destroyable, {
 			return sys.sortBy( this.find( query ), iterator, thisobj );
 		} else {
 			thisobj = iterator || this;
-			return sys.sortBy( this.heap, query, thisobj );
+			return sys.sortBy( this._heap, query, thisobj );
 		}
 	},
 	/**
@@ -214,7 +218,7 @@ var CollectorBase = dcl( Destroyable, {
 			return sys.max( this.find( query ), iterator, thisobj );
 		} else {
 			thisobj = iterator || this;
-			return sys.max( this.heap, query, thisobj );
+			return sys.max( this._heap, query, thisobj );
 		}
 	},
 	/**
@@ -232,14 +236,15 @@ var CollectorBase = dcl( Destroyable, {
 			return sys.min( this.find( query ), iterator, thisobj );
 		} else {
 			thisobj = iterator || this;
-			return sys.min( this.heap, query, thisobj );
+			return sys.min( this._heap, query, thisobj );
 		}
 	},
 	/**
 	 * Destructor called when the object is destroyed.
+	 * @private
 	 */
 	destroy       : function () {
-		this.heap = null;
+		this._heap = null;
 	}
 } );
 
@@ -255,7 +260,7 @@ var OCollector = dcl( CollectorBase, {
 	 * @return {*}
 	 */
 	key : function ( key ) {
-		return this.heap[key];
+		return this._heap[key];
 	}
 } );
 
@@ -265,43 +270,52 @@ var OCollector = dcl( CollectorBase, {
  @extends module:document/collector~CollectorBase
  @constructor
  */
-var ACollector = dcl( CollectorBase, {
+var ACollector = dcl( CollectorBase, /** @lends module:document/collector~ACollector# */{
 		constructor : function ( obj ) {
 			if ( obj && !sys.isArray( obj ) ) {
 				throw new TypeError( "Collectors require an array passed to the constructor" );
 			}
-			this.heap = obj || [];
+			this._heap = obj || [];
 			/**
 			 * Creates an array of array elements not present in the other arrays using strict equality for comparisons, i.e. ===.
 			 * @returns {array}
+			 * @member module:document/collector~ACollector#
+			 * @name difference
+			 * @function
 			 */
-			this.difference = sys.bind( sys.difference, this, this.heap );
+			this.difference = sys.bind( sys.difference, this, this._heap );
 			/**
 			 * This method gets all but the first values of array
 			 * @param {number=} n The numer of items to return
 			 * @returns {*}
+			 * @member module:document/collector~ACollector#
+			 * @name tail
+			 * @function
 			 */
-			this.tail = sys.bind( sys.tail, this, this.heap );
+			this.tail = sys.bind( sys.tail, this, this._heap );
 			/**
 			 * Gets the first n values of the array
 			 * @param {number=} n The numer of items to return
 			 * @returns {*}
+			 * @member module:document/collector~ACollector#
+			 * @name head
+			 * @function
 			 */
-			this.head = sys.bind( sys.head, this, this.heap );
+			this.head = sys.bind( sys.head, this, this._heap );
 		},
 		/**
 		 * Adds to the top of the collection
 		 * @param {*} item The item to add to the collection. Only one item at a time can be added
 		 */
 		add         : function ( item ) {
-			this.heap.unshift( item );
+			this._heap.unshift( item );
 		},
 		/**
 		 * Add to the bottom of the list
 		 * @param {*} item The item to add to the collection.  Only one item at a time can be added
 		 */
 		append      : function ( item ) {
-			this.heap.push( item );
+			this._heap.push( item );
 		},
 		/**
 		 * Add an item to the top of the list. This is identical to `add`, but is provided for stack semantics
@@ -314,7 +328,7 @@ var ACollector = dcl( CollectorBase, {
 		 * Modifies the collection with all falsey values of array removed. The values false, null, 0, "", undefined and NaN are all falsey.
 		 */
 		compact     : function () {
-			this.heap = sys.compact( this.heap );
+			this._heap = sys.compact( this._heap );
 		},
 		/**
 		 * Creates an array of elements from the specified indexes, or keys, of the collection. Indexes may be specified as
@@ -323,7 +337,7 @@ var ACollector = dcl( CollectorBase, {
 		 */
 		at          : function () {
 			var arr = sys.toArray( arguments );
-			arr.unshift( this.heap );
+			arr.unshift( this._heap );
 			return sys.at.apply( this, arr );
 		},
 		/**
@@ -341,7 +355,7 @@ var ACollector = dcl( CollectorBase, {
 				return sys.flatten( this.find( query ), iterator, thisobj );
 			} else {
 				thisobj = iterator || this;
-				return sys.flatten( this.heap, query, thisobj );
+				return sys.flatten( this._heap, query, thisobj );
 			}
 		},
 		/**
@@ -350,7 +364,7 @@ var ACollector = dcl( CollectorBase, {
 		 * @return {*}
 		 */
 		index       : function ( index ) {
-			return this.heap[ index ];
+			return this._heap[ index ];
 		}
 	}
 );
@@ -433,7 +447,7 @@ exports.object = function ( obj ) {
 /**
  Remove all items in the object/array that match the query
 
- @param {object} qu The query to execute. See {@link module:ink/probe.queryOperators} for the operators you can use.
+ @param {object} qu The query to execute. See {@link module:document/probe.queryOperators} for the operators you can use.
  @return {object|array} The array or object as appropriate without the records.
  @memberOf module:document/collector~CollectorBase#
  @name remove
@@ -464,7 +478,7 @@ exports.object = function ( obj ) {
 
 
 /**
- Find all records that match a query and returns the keys for those items. This is similar to {@link module:ink/probe.find} but instead of returning
+ Find all records that match a query and returns the keys for those items. This is similar to {@link module:document/probe.find} but instead of returning
  records, returns the keys. If `obj` is an object it will return the hash key. If 'obj' is an array, it will return the index
 
  @param {object} qu The query to execute.
@@ -486,10 +500,10 @@ exports.object = function ( obj ) {
  **/
 
 /**
- Updates all records in obj that match the query. See {@link module:ink/probe.updateOperators} for the operators that are supported.
+ Updates all records in obj that match the query. See {@link module:document/probe.updateOperators} for the operators that are supported.
 
  @param {object} qu The query which will be used to identify the records to updated
- @param {object} setDocument The update operator. See {@link module:ink/probe.updateOperators}
+ @param {object} setDocument The update operator. See {@link module:document/probe.updateOperators}
  @memberOf module:document/collector~CollectorBase#
  @name update
  @method

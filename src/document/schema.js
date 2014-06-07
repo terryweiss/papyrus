@@ -48,6 +48,7 @@ var Schema = Base.compose( [Base], /** @lends documents/schema# */{
 		 * @type {string|function():{string}}
 		 * @memberOf documents/schema#
 		 * @name _defaultSchemaName
+		 * @protected
 		 */
 		this._defaultSchemaName = sys.result( this, "_defaultSchemaName" ) || sys.uniqueId( "schema" );
 

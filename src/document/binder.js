@@ -16,7 +16,7 @@ var sys = require( "lodash" );
 /**
  * Identifies the properties that the binder expects
  * @type {{getter: null, getterAsync: boolean, setter: null, validator: null, validatorAsync: boolean, setterAsync: boolean}}
- * @private
+ *
  */
 var dataBinderOptions = exports.dataBinderOptions = {
 	getter         : null,
@@ -116,6 +116,9 @@ exports.bind = function ( path, record, options ) {
 	function setUpBindings( mountPoint, mountName ) {
 		mountPoint["__" + mountName + "__"] = mountPoint[mountName];
 		Object.defineProperty( mountPoint, mountName, {
+			enumerable   : false,
+			configurable : true,
+
 			get : function () {
 				if ( sys.isFunction( options.getter ) ) {
 					var promise;

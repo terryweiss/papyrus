@@ -118,6 +118,7 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 					}
 					return done();
 				}
+
 			} else {
 				return done();
 			}
@@ -224,7 +225,6 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 			this.getNumListeners()
 		);
 	}
-
 } );
 
 /**
@@ -272,13 +272,14 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 			this._addSignal( key, opts );
 		} );
 	},
+
 	/**
 	 * Creates a single signal
 	 * @param {string} name The name of the signal
 	 * @param {module:mixins/signalable~SignalOptions} options The options the signal expects
-	 * @private
+	 * @protected
 	 */
-	_addSignal   : function ( name, options ) {
+	_addSignal : function ( name, options ) {
 		if ( sys.isEmpty( this[name] ) ) {
 			this[name] = new Signal( this, name, options );
 		}
@@ -287,9 +288,9 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 	/**
 	 * Add a signal to an object. If any members of the hash already exist in `this.signals`, they will be overwritten.
 	 * @param {module:mixins/signalable.SignalOptions} signals
-	 * @private
+	 * @protected
 	 */
-	_addSignals : function ( signals ) {
+	_addSignals    : function ( signals ) {
 		signals = signals || {};
 		sys.each( signals, function ( val, key ) {
 			this._addSignal( key, val );
@@ -301,12 +302,42 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 	 * Clean up
 	 * @private
 	 */
-	destroy     : function () {
+	destroy        : function () {
 		sys.each( sys.keys( this ), function ( key ) {
 			if ( this[key] instanceof Signal || this[key] instanceof signals.Signal ) {
 				this[key].close();
 			}
 		}, this );
+	},
+	/**
+	 * Request cascade for a signal. NOT READY FOR PRIMETIME!!!!
+	 *
+	 * @param {string} name The name of the event to cascade
+	 * @param {...*} params An *array* of params to pass
+	 * @param {number=} depth How deep the cascade should go.
+	 * @protected
+	 */
+	_cascadeSignal : function ( name, params, depth ) {
+		depth = depth || 20;
+		var that = this;
+
+		cascade( that );
+
+		function cascade( parent ) {
+			if ( depth === 0 ) {return false;}
+
+			sys.each( parent, function ( val, key ) {
+				if ( !sys.isEmpty( val ) && sys.isObject( val ) ) {
+					if ( val instanceof Signal && val === parent[name] ) {
+						sys.bind( parent[name].fire, parent, params )( that );
+					} else if ( !(val instanceof Signal) ) {
+						cascade( val );
+					}
+				}
+
+			} );
+			depth--;
+		}
 	}
 
 } );

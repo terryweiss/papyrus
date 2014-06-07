@@ -44,6 +44,10 @@
 		</li>
 
 		<li>
+			<a href="collector.html">document/collector</a>
+		</li>
+
+		<li>
 			<a href="model__.html">document/model</a>
 		</li>
 
@@ -53,10 +57,6 @@
 
 		<li>
 			<a href="schema__.html">document/schema</a>
-		</li>
-
-		<li>
-			<a href="collector.html">ink/collector</a>
 		</li>
 
 		<li>
@@ -81,6 +81,14 @@
 
 		<li>
 			<a href="module-view.html">view</a>
+		</li>
+
+		<li>
+			<a href="presence.html">view/presence</a>
+		</li>
+
+		<li>
+			<a href="zone.html">view/zone</a>
 		</li>
 
 	</ul>
@@ -109,23 +117,23 @@
 		</li>
 
 		<li>
+			<a href="collector-ACollector.html">ACollector</a>
+		</li>
+
+		<li>
+			<a href="collector-CollectorBase.html">CollectorBase</a>
+		</li>
+
+		<li>
+			<a href="collector-OCollector.html">OCollector</a>
+		</li>
+
+		<li>
 			<a href="probe.queryOperators.html">queryOperators</a>
 		</li>
 
 		<li>
 			<a href="probe.updateOperators.html">updateOperators</a>
-		</li>
-
-		<li>
-			<a href="collector-ACollector.html">ACollector</a>
-		</li>
-
-		<li>
-			<a href="collector-CollectorBase_.html">CollectorBase</a>
-		</li>
-
-		<li>
-			<a href="collector-OCollector.html">OCollector</a>
 		</li>
 
 		<li>
@@ -159,6 +167,10 @@
 
 		<li>
 			<a href="signalable.html">mixins/signalable</a>
+		</li>
+
+		<li>
+			<a href="presence_.html">view/presence</a>
 		</li>
 
 	</ul>
@@ -234,6 +246,10 @@
 			<a href="module-view.View.html#event:viewUnrendered">viewUnrendered</a>
 		</li>
 
+		<li>
+			<a href="presence_.html#event:elChanged">elChanged</a>
+		</li>
+
 	</ul>
 </li>
 
@@ -242,6 +258,18 @@
 		class="caret"></b></a>
 
 	<ul class="dropdown-menu ">
+
+		<li>
+			<a href="global.html#difference">difference</a>
+		</li>
+
+		<li>
+			<a href="global.html#head">head</a>
+		</li>
+
+		<li>
+			<a href="global.html#tail">tail</a>
+		</li>
 
 		<li>
 			<a href="global.html#utils/logger">utils/logger</a>
@@ -325,102 +353,303 @@
 
 <dl>
 
-	<dt>
-	<h4 class="name" id="module:strings/format"><span class="type-signature"></span>require("strings/format")<span
-		class="signature">(format, args)</span><span class="type-signature"> &rarr; {string}</span></h4>
+<dt>
+<h4 class="name" id="difference"><span class="type-signature"></span>difference<span class="signature">()</span><span
+	class="type-signature"> &rarr; {array}</span></h4>
 
-	</dt>
-	<dd>
+</dt>
+<dd>
 
-		<div class="description">
-			<p>Format a string quickly and easily using .net style format strings</p>
-		</div>
+	<div class="description">
+		<p>Creates an array of array elements not present in the other arrays using strict equality for comparisons, i.e.
+		   ===.</p>
+	</div>
 
-		<h5>Parameters:</h5>
+	<dl class="details">
 
-		<table class="params table table-striped">
-			<thead>
-			<tr>
+		<dt class="tag-source">Source:</dt>
+		<dd class="tag-source">
+			<ul class="dummy">
+				<li>
+					<a href="collector.js.html">document/collector.js</a>,
+					<a href="collector.js.html#sunlight-1-line-279">line 279</a>
+				</li>
+			</ul>
+		</dd>
 
-				<th>Name</th>
+	</dl>
 
-				<th>Type</th>
+	<h5>Returns:</h5>
 
-				<th>Argument</th>
+	<dl>
+		<dt>
+			Type
+		</dt>
+		<dd>
 
-				<th class="last">Description</th>
-			</tr>
-			</thead>
+			<span class="param-type">array</span>
 
-			<tbody>
+		</dd>
+	</dl>
 
-			<tr>
+</dd>
 
-				<td class="name"><code>format</code></td>
+<dt>
+<h4 class="name" id="head"><span class="type-signature"></span>head<span class="signature">(<span
+	class="optional">n</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
 
-				<td class="type">
+</dt>
+<dd>
 
-					<span class="param-type">string</span>
+	<div class="description">
+		<p>Gets the first n values of the array</p>
+	</div>
 
-				</td>
+	<h5>Parameters:</h5>
 
-				<td class="attributes">
+	<table class="params table table-striped">
+		<thead>
+		<tr>
 
-				</td>
+			<th>Name</th>
 
-				<td class="description last"><p>A string format like &quot;Hello {0}, now take off your {1}!&quot;</p></td>
-			</tr>
+			<th>Type</th>
 
-			<tr>
+			<th>Argument</th>
 
-				<td class="name"><code>args</code></td>
+			<th class="last">Description</th>
+		</tr>
+		</thead>
 
-				<td class="type">
+		<tbody>
 
-					<span class="param-type">?</span>
+		<tr>
 
-				</td>
+			<td class="name"><code>n</code></td>
 
-				<td class="attributes">
+			<td class="type">
 
-					&lt;repeatable><br>
+				<span class="param-type">number</span>
 
-				</td>
+			</td>
 
-				<td class="description last"><p>One argument per <code>{}</code> in the string, positionally replaced</p></td>
-			</tr>
+			<td class="attributes">
 
-			</tbody>
-		</table>
+				&lt;optional><br>
 
-		<dl class="details">
+			</td>
 
-			<dt class="tag-source">Source:</dt>
-			<dd class="tag-source">
-				<ul class="dummy">
-					<li>
-						<a href="format.js.html">strings/format.js</a>,
-						<a href="format.js.html#sunlight-1-line-15">line 15</a>
-					</li>
-				</ul>
-			</dd>
+			<td class="description last"><p>The numer of items to return</p></td>
+		</tr>
 
-		</dl>
+		</tbody>
+	</table>
 
-		<h5>Returns:</h5>
+	<dl class="details">
 
-		<dl>
-			<dt>
-				Type
-			</dt>
-			<dd>
+		<dt class="tag-source">Source:</dt>
+		<dd class="tag-source">
+			<ul class="dummy">
+				<li>
+					<a href="collector.js.html">document/collector.js</a>,
+					<a href="collector.js.html#sunlight-1-line-296">line 296</a>
+				</li>
+			</ul>
+		</dd>
+
+	</dl>
+
+	<h5>Returns:</h5>
+
+	<dl>
+		<dt>
+			Type
+		</dt>
+		<dd>
+
+			<span class="param-type">*</span>
+
+		</dd>
+	</dl>
+
+</dd>
+
+<dt>
+<h4 class="name" id="module:strings/format"><span class="type-signature"></span>require("strings/format")<span
+	class="signature">(format, args)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+</dt>
+<dd>
+
+	<div class="description">
+		<p>Format a string quickly and easily using .net style format strings</p>
+	</div>
+
+	<h5>Parameters:</h5>
+
+	<table class="params table table-striped">
+		<thead>
+		<tr>
+
+			<th>Name</th>
+
+			<th>Type</th>
+
+			<th>Argument</th>
+
+			<th class="last">Description</th>
+		</tr>
+		</thead>
+
+		<tbody>
+
+		<tr>
+
+			<td class="name"><code>format</code></td>
+
+			<td class="type">
 
 				<span class="param-type">string</span>
 
-			</dd>
-		</dl>
+			</td>
 
-	</dd>
+			<td class="attributes">
+
+			</td>
+
+			<td class="description last"><p>A string format like &quot;Hello {0}, now take off your {1}!&quot;</p></td>
+		</tr>
+
+		<tr>
+
+			<td class="name"><code>args</code></td>
+
+			<td class="type">
+
+				<span class="param-type">?</span>
+
+			</td>
+
+			<td class="attributes">
+
+				&lt;repeatable><br>
+
+			</td>
+
+			<td class="description last"><p>One argument per <code>{}</code> in the string, positionally replaced</p></td>
+		</tr>
+
+		</tbody>
+	</table>
+
+	<dl class="details">
+
+		<dt class="tag-source">Source:</dt>
+		<dd class="tag-source">
+			<ul class="dummy">
+				<li>
+					<a href="format.js.html">strings/format.js</a>,
+					<a href="format.js.html#sunlight-1-line-15">line 15</a>
+				</li>
+			</ul>
+		</dd>
+
+	</dl>
+
+	<h5>Returns:</h5>
+
+	<dl>
+		<dt>
+			Type
+		</dt>
+		<dd>
+
+			<span class="param-type">string</span>
+
+		</dd>
+	</dl>
+
+</dd>
+
+<dt>
+<h4 class="name" id="tail"><span class="type-signature"></span>tail<span class="signature">(<span
+	class="optional">n</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
+
+</dt>
+<dd>
+
+	<div class="description">
+		<p>This method gets all but the first values of array</p>
+	</div>
+
+	<h5>Parameters:</h5>
+
+	<table class="params table table-striped">
+		<thead>
+		<tr>
+
+			<th>Name</th>
+
+			<th>Type</th>
+
+			<th>Argument</th>
+
+			<th class="last">Description</th>
+		</tr>
+		</thead>
+
+		<tbody>
+
+		<tr>
+
+			<td class="name"><code>n</code></td>
+
+			<td class="type">
+
+				<span class="param-type">number</span>
+
+			</td>
+
+			<td class="attributes">
+
+				&lt;optional><br>
+
+			</td>
+
+			<td class="description last"><p>The numer of items to return</p></td>
+		</tr>
+
+		</tbody>
+	</table>
+
+	<dl class="details">
+
+		<dt class="tag-source">Source:</dt>
+		<dd class="tag-source">
+			<ul class="dummy">
+				<li>
+					<a href="collector.js.html">document/collector.js</a>,
+					<a href="collector.js.html#sunlight-1-line-287">line 287</a>
+				</li>
+			</ul>
+		</dd>
+
+	</dl>
+
+	<h5>Returns:</h5>
+
+	<dl>
+		<dt>
+			Type
+		</dt>
+		<dd>
+
+			<span class="param-type">*</span>
+
+		</dd>
+	</dl>
+
+</dd>
 
 </dl>
 
@@ -441,7 +670,7 @@
 
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Tue Jun 3rd 2014 using the <a
+		on Sat Jun 7th 2014 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 </footer>

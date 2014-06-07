@@ -210,70 +210,73 @@ var View = Base.compose( [Base, Signalable], /** @lends module:view.View# */{
 	 * Start the view
 	 */
 	start       : function ( callback ) {
-		this.beforeViewStarted.fire( function () {
-			console.debug( "beforeStartedView fired" );
-		} );
-
-		this.viewStarted.fire( function () {
-			console.debug( "started fired" );
-		} );
-		callback();
+		async.series( [
+			this.beforeViewStarted.fire,
+			this.viewStarted.fire
+		], callback );
 	},
 	/**
 	 * Open the view
 	 */
 	open        : function ( callback ) {
-		this.beforeViewOpened.fire();
-		this.viewOpened.fire();
-		callback();
+		async.series( [
+			this.beforeViewOpened.fire,
+			this.viewOpened.fire
+		], callback );
 	},
 	/**
 	 * Render the view
 	 */
 	render      : function ( callback ) {
-		this.beforeViewRendered.fire();
-		this.viewRendered.fire();
-		callback();
+		async.series( [
+			this.beforeViewRendered.fire,
+			this.viewRendered.fire
+		], callback );
 	},
 	/**
 	 * Show the view
 	 */
 	show        : function ( callback ) {
-		this.beforeViewShown.fire();
-		this.viewShown.fire();
-		callback();
+		async.series( [
+			this.beforeViewShown.fire,
+			this.viewShown.fire
+		], callback );
 	},
 	/**
 	 * Hide the view
 	 */
 	hide        : function ( callback ) {
-		this.beforeViewHidden.fire();
-		this.viewHidden.fire();
-		callback();
+		async.series( [
+			this.beforeViewHidden.fire,
+			this.viewHidden.fire
+		], callback );
 	},
 	/**
 	 * Unrender the view
 	 */
 	unrender    : function ( callback ) {
-		this.beforeViewUnrendered.fire();
-		this.viewUnrendered.fire();
-		callback();
+		async.series( [
+			this.beforeViewUnrendered.fire,
+			this.viewUnrendered.fire
+		], callback );
 	},
 	/**
 	 * Close the view
 	 */
 	close       : function ( callback ) {
-		this.beforeViewClosed.fire();
-		this.viewClosed.fire();
-		callback();
+		async.series( [
+			this.beforeViewClosed.fire,
+			this.viewClosed.fire
+		], callback );
 	},
 	/**
 	 * Close the view
 	 */
 	end         : function ( callback ) {
-		this.beforeViewEnded.fire();
-		this.viewEnded.fire();
-		callback();
+		async.series( [
+			this.beforeViewEnded.fire,
+			this.viewEnded.fire
+		], callback );
 	}
 } );
 /**
@@ -370,3 +373,5 @@ var viewStates = {
 	 */
 	"shown"    : {val : 40, nextStateUp : "interactive", nextStateDown : "rendered", upOp : "show", downOp : "hide", name : "shown"}
 };
+
+module.exports = View;

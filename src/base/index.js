@@ -20,27 +20,29 @@ var chains = require( "./chains" );
  * @extends base/chains
  */
 var Base = dcl( [chains], /** @lends base# */{
-	declaredClass     : "Base",
+	declaredClass      : "Base",
 	/**
-	 * Add an option to a class. If any members of the hash already exist in `this.options`, they will be overwritten.
+	 * Add an option to a class. If any members of the hash already exist in `this._options`, they will be overwritten.
 	 * @param {hash} options A hash of options you want to set
 	 * @see {base#addDefaultOptions}
+	 * @protected
 	 */
-	addOptions        : function ( options ) {
+	_addOptions        : function ( options ) {
 		options = options || {};
-		if ( this.options ) {options = sys.extend( {}, sys.result( this, 'options' ), options );}
-		this.options = options;
+		if ( this._options ) {options = sys.extend( {}, sys.result( this, '_options' ), options );}
+		this._options = options;
 	},
 	/**
 	 * Add a default option to a class. The default options are only set if there is not already a
 	 * value for the option.
 	 * @param {hash} options A hash of options you want to set
 	 * @see {base#addOptions}
+	 * @protected
 	 */
-	addDefaultOptions : function ( options ) {
+	_addDefaultOptions : function ( options ) {
 		options = options || {};
-		if ( this.options ) {options = sys.defaults( {}, sys.result( this, 'options' ), options );}
-		this.options = options;
+		if ( this._options ) {options = sys.defaults( {}, sys.result( this, '_options' ), options );}
+		this._options = options;
 	},
 
 	/**
@@ -60,9 +62,10 @@ var Base = dcl( [chains], /** @lends base# */{
 	 * `instance.end()` automatically
 	 * @see {base/chains#end}
 	 * @see {base/chains#destroy}
+	 * @private
 	 */
 	destroy : function () {
-
+		this._options = null;
 	}
 
 
