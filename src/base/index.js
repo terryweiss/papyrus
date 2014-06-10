@@ -8,6 +8,7 @@
 
 var dcl = require( "dcl" );
 var chains = require( "./chains" );
+var logger = require("../utils/logger");
 
 /**
  * @classdesc The base of all classes in the system, this is one of the few pure "classes" in core the of the system. It is a
@@ -21,6 +22,18 @@ var chains = require( "./chains" );
  */
 var Base = dcl( [chains], /** @lends base# */{
 	declaredClass      : "Base",
+	constructor: function(){
+		logger.trace(this.declaredClass, "constructor");
+	},
+	close: function(){
+		logger.trace(this.declaredClass, "close");
+	},
+	open: function(){
+		logger.trace(this.declaredClass, "open");
+	},
+	start: function(){
+		logger.trace(this.declaredClass, "start");
+	},
 	/**
 	 * Add an option to a class. If any members of the hash already exist in `this._options`, they will be overwritten.
 	 * @param {hash} options A hash of options you want to set
@@ -53,6 +66,7 @@ var Base = dcl( [chains], /** @lends base# */{
 	 * @see {base/chains#destroy}
 	 */
 	end : function () {
+		logger.trace(this.declaredClass, "end");
 		this.destroy()
 	},
 
@@ -65,9 +79,22 @@ var Base = dcl( [chains], /** @lends base# */{
 	 * @private
 	 */
 	destroy : function () {
+		logger.trace(this.declaredClass, "destroy");
 		this._options = null;
 	}
-
+//	/**
+//	 * All objects should have a JSON representation if possible
+//	 * @returns {object?}
+//	 */
+//	toJSON  : function () {
+//		var retval;
+//		try {
+//			retval = JSON.parse( JSON.stringify( this ) );
+//		} catch ( e ) {
+//			retval = this;
+//		}
+//		return retval;
+//	}
 
 } );
 

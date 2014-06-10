@@ -7,8 +7,8 @@
  */
 
 var dcl = require( "dcl" );
-var log = require( 'loglevel' );
-
+//var log = require( 'loglevel' );
+var log = require("js-logger");
 /**
  * A logger class that you can mix into your classes to handle logging settings and state at an object level.
  * See {@link utils/logger} for the members of this class
@@ -19,6 +19,9 @@ var log = require( 'loglevel' );
  */
 var Logger = dcl( null, /** @lends  utils/logger.Logger# */{
 	declaredClass : "utils/Logger",
+	constructor: function(){
+		log.useDefaults();
+	},
 
 	/**
 	 * Turn off all logging. If you log something, it will not error, but will not do anything either
@@ -26,14 +29,16 @@ var Logger = dcl( null, /** @lends  utils/logger.Logger# */{
 	 *
 	 */
 	silent : function () {
-		log.disableAll();
+//		log.disableAll();
+		log.setLevel(log.OFF);
 	},
 	/**
 	 * Turns on all logging levels
 	 *
 	 */
 	all    : function () {
-		log.enableAll();
+//		log.enableAll();
+		log.setLevel(log.DEBUG);
 	},
 	/**
 	 * Sets the logging level to one of `trace`, `debug`, `info`, `warn`, `error`.
@@ -42,7 +47,7 @@ var Logger = dcl( null, /** @lends  utils/logger.Logger# */{
 	 */
 	level  : function ( lvl ) {
 		if ( lvl.toLowerCase() === "none" ) {
-			log.disableAll();
+			this.disableAll();
 		} else {
 			log.setLevel( lvl );
 		}
@@ -52,7 +57,7 @@ var Logger = dcl( null, /** @lends  utils/logger.Logger# */{
 	 * @method
 	 * @param {string} The value to log
 	 */
-	trace  : log.trace,
+	trace  : log.debug,
 	/**
 	 * Log a `debug` call
 	 * @method

@@ -4,7 +4,8 @@
  @module document/collector
  */
 
-var probe = require( "ink-probe" );
+var Base = require( "../base" );
+var probe = require( "./probe" );
 var sys = require( "lodash" );
 var dcl = require( "dcl" );
 
@@ -12,8 +13,8 @@ var dcl = require( "dcl" );
  * A collector
  * @constructor
  */
-var CollectorBase = dcl( Destroyable, /** @lends module:document/collector~CollectorBase#*/ {
-	declaredClass : "CollectorBase",
+var CollectorBase = dcl( Base, /** @lends module:document/collector~CollectorBase#*/ {
+	declaredClass : "document/collector",
 	constructor   : function ( obj ) {
 		var that = this;
 		if ( obj && !sys.isObject( obj ) ) {

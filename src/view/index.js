@@ -8,6 +8,7 @@
 
 var Base = require( "../base" );
 var Signalable = require( "../mixins/signalable" );
+var Presence = require( "./presence" );
 var async = require( "async" );
 var sys = require( "lodash" );
 /**
@@ -16,15 +17,27 @@ var sys = require( "lodash" );
  * @constructor
  * @memberOf module:view
  */
-var View = Base.compose( [Base, Signalable], /** @lends module:view.View# */{
+var View = Base.compose( [Base, Presence, Signalable], /** @lends module:view.View# */{
+	declaredClass : "view",
 	/**
 	 * The template that will be rendered, if supplied
 	 *
-	 * @type {string|function}
+	 * @type {function}
 	 */
-	template    : null,
-	constructor : function () {
+	template      : null,
+	constructor   : function () {
+
 		var that = this;
+		this.options = this.options || {};
+		this._viewCallState = {
+			start : false,
+			open  : false,
+			close : false,
+			end   : false
+		};
+		this._resetViewCallState = function () {
+			this._viewCallState.start = this._viewCallState.open = this._viewCallState.close = this._viewCallState.end = false;
+		};
 		this._addSignals( {
 			/**
 			 * When the view has been started
@@ -114,23 +127,17 @@ var View = Base.compose( [Base, Signalable], /** @lends module:view.View# */{
 		 * @private
 		 */
 		var state = 0;
+
 		/**
 		 * The current state of the view. You can set a new state by assigning to this or calling one of the state methods
 		 * @type {number}
 		 * @name viewState
 		 * @memberOf module:view.View#
+		 * @readOnly
 		 */
 		Object.defineProperty( this, "viewState", {
 			get : function () {
 				return viewStates.fromValue( state );
-			},
-			set : function ( val ) {
-
-				setLevel( val, function ( err ) {
-					if ( !err ) {
-						state = val;
-					}
-				} );
 			}
 		} );
 
@@ -155,11 +162,20 @@ var View = Base.compose( [Base, Signalable], /** @lends module:view.View# */{
 		/**
 		 * Set level will change the state to one of the `viewState`s and call each intervening step
 		 * @param {number|viewState|string} requestedLevel The level to set it to, see {@link viewStates} for possible value
+		 * @param {object=} params A hash of parameters to pass to the operation
 		 * @param {function(err)} callback When done
+		 * @private
 		 */
-		function setLevel( requestedLevel, callback ) {
+		this._setLevel = function ( requestedLevel, params, callback ) {
+
+			if ( sys.isFunction( params ) ) {
+				callback = params;
+				params = null;
+			}
+			params = params || {};
 			callback = callback || function () {};
-			var newLevel = viewStates.resolve( requestedLevel );
+
+			var newLevel = requestedLevel;
 
 			if ( newLevel ) {
 				newLevel = newLevel.val;
@@ -179,24 +195,23 @@ var View = Base.compose( [Base, Signalable], /** @lends module:view.View# */{
 			async.whilst( function () {
 				return newLevel !== state;
 			}, function ( done ) {
-
 				var next;
 				if ( dir === "up" ) {
 					next = viewStates.nextUp( state );
+					state = next.val;
+
 					if ( next && next.upOp ) {
-						state = next.val;
-						that[next.upOp]( done );
+						that[next.upOp]( params, done );
 					} else {
 						done();
 					}
 				} else {
 					next = viewStates.nextDown( state );
+					state = next.val;
+
 					if ( next && next.downOp ) {
-						var nextState = viewStates.fromName( next.nextStateDown );
-						that[next.downOp]( function () {
-							state = nextState.val;
-							done();
-						} );
+
+						that[next.downOp]( params, done );
 					} else {
 						done();
 					}
@@ -204,78 +219,301 @@ var View = Base.compose( [Base, Signalable], /** @lends module:view.View# */{
 
 			}, callback );
 
-		};
+		}
 	},
+
+	/**
+	 * Render the template to `$el`
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	render : function ( params, callback ) {
+		this._resetViewCallState();
+		this._setLevel( viewStates.rendered, params, callback );
+	},
+
+	/**
+	 * Starts the view, which is just to bootstrap stuff
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	start : function ( params, callback ) {
+		this._resetViewCallState();
+		this._viewCallState.start = true;
+		this._setLevel( viewStates.started, params, callback );
+	},
+
+	/**
+	 * Opens the view, which is the step before rendering, grab your data and format it for the template
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	open : function ( params, callback ) {
+		this._resetViewCallState();
+		this._viewCallState.open = true;
+		this._setLevel( viewStates.opened, params, callback );
+	},
+
+	/**
+	 * Shows a view. If called by a zone, it means this will be mounted somewhere. Otherwise it just calls `show` on `$el` with
+	 * any animations you may have set for this view
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	show : function ( params, callback ) {
+		this._resetViewCallState();
+		this._setLevel( viewStates.interactive, params, callback );
+	},
+
+	/**
+	 * Hides a view. If called by a zone, it means this will be unmounted. Otherwise it just calls `hide` on `$el` with
+	 * any animations you may have set for this view
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	hide : function ( params, callback ) {
+		this._resetViewCallState();
+		this._setLevel( viewStates.rendered, params, callback );
+	},
+
+	/**
+	 * Remove the template from `$el`
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	unrender : function ( params, callback ) {
+		this._resetViewCallState();
+		this._setLevel( viewStates.opened, params, callback );
+	},
+	/**
+	 * End
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	end      : function ( params, callback ) {
+		this._resetViewCallState();
+		this._viewCallState.end= true;
+		this._setLevel( viewStates.dormant, params, callback );
+	},
+
+	/**
+	 * Close
+	 * @param {object?} params Anything you want to pass to the operation
+	 * @param {function(err)} callback When done
+	 */
+	close : function ( params, callback ) {
+		this._resetViewCallState();
+		this._viewCallState.close = true;
+		this._setLevel( viewStates.started, params, callback );
+	},
+
 	/**
 	 * Start the view
 	 */
-	start       : function ( callback ) {
+	_doStart : function ( params, callback ) {
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		               var that = this;
 		async.series( [
-			this.beforeViewStarted.fire,
-			this.viewStarted.fire
+			sys.partial( this.beforeViewStarted.fire, params ),
+			sys.partial( this.viewStarted.fire, params ) ,
+			function ( done ) {
+				if ( that._viewCallState.start === false ) {
+					Base.prototype.start.call( that, params );
+					that._viewCallState.start = true;
+				}
+				done();
+			}
 		], callback );
 	},
+
 	/**
 	 * Open the view
 	 */
-	open        : function ( callback ) {
+	_doOpen : function ( params, callback ) {
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		var that = this;
 		async.series( [
-			this.beforeViewOpened.fire,
-			this.viewOpened.fire
+			sys.partial( this.beforeViewOpened.fire, params ),
+			sys.partial( this.viewOpened.fire, params ),
+			function ( done ) {
+				if ( that._viewCallState.open === false ) {
+					Base.prototype.open.call( that, params );
+					that._viewCallState.open = true;
+				}
+				done();
+			}
 		], callback );
 	},
+
 	/**
 	 * Render the view
+	 * @protected
 	 */
-	render      : function ( callback ) {
+	_doRender   : function ( params, callback ) {
+		if ( !sys.isFunction( this.template ) ) {
+			throw new TypeError( "render requires a template method" );
+		}
+
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		var that = this;
+
 		async.series( [
-			this.beforeViewRendered.fire,
-			this.viewRendered.fire
+			sys.partial( this.beforeViewRendered.fire, params ),
+			function ( done ) {
+				params = params || {};
+				params._options = that.options;
+				params._view = sys.isFunction( that.toJSON ) ? that.toJSON() : that;
+				that.$el.html( that.template( params ) );
+				done();
+			},
+			sys.partial( this.viewRendered.fire, params )
 		], callback );
 	},
 	/**
 	 * Show the view
 	 */
-	show        : function ( callback ) {
+	_doShow     : function ( params, callback ) {
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		var that = this;
+
 		async.series( [
-			this.beforeViewShown.fire,
-			this.viewShown.fire
+			sys.partial( that.beforeViewShown.fire, params ),
+			function ( done ) {
+				if ( !sys.isEmpty( that.showAnimation ) ) {
+					that.showAnimation.animate( this.$el, params, done );
+				} else {
+					that.$el.show();
+					done();
+				}
+			},
+			sys.partial( that.viewShown.fire, params )
 		], callback );
+
 	},
 	/**
 	 * Hide the view
 	 */
-	hide        : function ( callback ) {
+	_doHide     : function ( params, callback ) {
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		var that = this;
+
 		async.series( [
-			this.beforeViewHidden.fire,
-			this.viewHidden.fire
+			sys.partial( this.beforeViewHidden.fire, params ),
+			function ( done ) {
+				if ( !sys.isEmpty( that.hideAnimation ) ) {
+					that.hideAnimation.animate( this.$el, params, done );
+				} else {
+					that.$el.hide();
+					done();
+				}
+			},
+			sys.partial( this.viewHidden.fire, params )
 		], callback );
+
 	},
 	/**
 	 * Unrender the view
 	 */
-	unrender    : function ( callback ) {
+	_doUnrender : function ( params, callback ) {
+		if ( !sys.isFunction( this.template ) ) {
+			throw new TypeError( "render requires a template method" );
+		}
+
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		var that = this;
+
 		async.series( [
-			this.beforeViewUnrendered.fire,
-			this.viewUnrendered.fire
+			sys.partial( that.beforeViewUnrendered.fire, params ),
+			function ( done ) {
+				that.$el.empty();
+				done();
+			},
+			sys.partial( that.viewUnrendered.fire, params )
 		], callback );
+
 	},
 	/**
 	 * Close the view
 	 */
-	close       : function ( callback ) {
+	_doClose    : function ( params, callback ) {
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		var that = this;
 		async.series( [
-			this.beforeViewClosed.fire,
-			this.viewClosed.fire
+			sys.partial( this.beforeViewClosed.fire, params ),
+			sys.partial( this.viewClosed.fire, params ) ,
+			function ( done ) {
+				if ( that._viewCallState.close === false ) {
+					Base.prototype.close.call( that, params );
+					that._viewCallState.close = true;
+				}
+				done();
+			}
 		], callback );
 	},
 	/**
-	 * Close the view
+	 * End the view
 	 */
-	end         : function ( callback ) {
+	_doEnd      : function ( params, callback ) {
+		if ( sys.isFunction( params ) ) {
+			callback = params;
+			params = null;
+		}
+		if ( !sys.isFunction( callback ) ) {
+			callback = sys.identity;
+		}
+		var that = this;
 		async.series( [
-			this.beforeViewEnded.fire,
-			this.viewEnded.fire
+			sys.partial( this.beforeViewEnded.fire, params ),
+			sys.partial( this.viewEnded.fire, params ),
+			function ( done ) {
+				if ( that._viewCallState.end === false ) {
+					Base.prototype.end.call( that, params );
+					that._viewCallState.end = true;
+				}
+				done();
+			}
 		], callback );
 	}
 } );
@@ -321,21 +559,11 @@ var viewStates = {
 	 * @return {viewStates?}
 	 */
 	nextDown  : function ( state ) {
-		var nextDown;
 		var toAnalyze = viewStates.resolve( state );
-//		if ( toAnalyze.name === "shown" ) {
-//			nextDown = toAnalyze;
-//		} else {
-//			nextDown = viewStates.resolve( toAnalyze.nextStateDown );
-//		}
-
-		if ( toAnalyze ) {
-			nextDown = sys.find( viewStates.sortedDesc, function ( val ) {
-				return val.val <= toAnalyze.val;
-			} );
-		}
+		var nextDown = viewStates.resolve( toAnalyze.nextStateDown );
 
 		return nextDown;
+
 	},
 	/**
 	 * Resolves a value or name or viewState and returns the viewState
@@ -355,23 +583,27 @@ var viewStates = {
 	/**
 	 * Nothing is happening, no visual or hidden components are available
 	 */
-	"dormant"  : {val : 0, nextStateUp : "started", nextStateDown : null, upOp : null, downOp : null, name : "dormant"},
+	"dormant"     : {val : 0, nextStateUp : "started", nextStateDown : null, upOp : null, downOp : null, name : "dormant"},
 	/**
 	 * The view is started, it has all it needs to render and display
 	 */
-	"started"  : {val : 10, nextStateUp : "opened", nextStateDown : "dormant", upOp : "start", downOp : "end", name : "started"},
+	"started"     : {val : 10, nextStateUp : "opened", nextStateDown : "dormant", upOp : "_doStart", downOp : "_doEnd", name : "started"},
 	/**
 	 * Ready to render
 	 */
-	"opened"   : {val : 20, nextStateUp : "rendered", nextStateDown : "started", upOp : "open", downOp : "close", name : "opened"},
+	"opened"      : {val : 20, nextStateUp : "rendered", nextStateDown : "started", upOp : "_doOpen", downOp : "_doClose", name : "opened"},
 	/**
 	 * Ready to show
 	 */
-	"rendered" : {val : 30, nextStateUp : "shown", nextStateDown : "opened", upOp : "render", downOp : "unrender", name : "rendered" },
+	"rendered"    : {val : 30, nextStateUp : "shown", nextStateDown : "opened", upOp : "_doRender", downOp : "_doUnrender", name : "rendered" },
 	/**
 	 * Displayed
 	 */
-	"shown"    : {val : 40, nextStateUp : "interactive", nextStateDown : "rendered", upOp : "show", downOp : "hide", name : "shown"}
+	"shown"       : {val : 40, nextStateUp : "interactive", nextStateDown : "rendered", upOp : "_doShow", downOp : "_doHide", name : "shown"},
+	/**
+	 * Whole hog
+	 */
+	"interactive" : {val : 50, nextStateUp : null, nextStateDown : "shown", upOp : null, downOp : null, name : "intertactive"}
 };
 
 module.exports = View;

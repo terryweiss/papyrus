@@ -15,7 +15,9 @@ var Base = require( "../base/index" );
  * @mixin
  */
 var Schema = Base.compose( [Base], /** @lends documents/schema# */{
+	declaredClass : "document/schema",
 	constructor : function () {
+
 		/**
 		 * The schema that defines the validation rules. This should probably be defined at the prototype for each
 		 * object or model classification. It can be an anonymous schema defined right here, or this can be

@@ -16,730 +16,1138 @@
 
 <body>
 <div class="container-fluid">
-<div class="navbar navbar-fixed-top navbar-inverse">
-<div class="navbar-inner">
-<a class="brand" href="index.html">Papyrus</a>
-<ul class="nav">
-
-<li class="dropdown">
-	<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
-		class="caret"></b></a>
-
-	<ul class="dropdown-menu ">
-
-		<li>
-			<a href="client_.html">application/client</a>
-		</li>
-
-		<li>
-			<a href="module-base.html">base</a>
-		</li>
-
-		<li>
-			<a href="chains_.html">base/chains</a>
-		</li>
-
-		<li>
-			<a href="binder.html">document/binder</a>
-		</li>
-
-		<li>
-			<a href="collector.html">document/collector</a>
-		</li>
-
-		<li>
-			<a href="model__.html">document/model</a>
-		</li>
-
-		<li>
-			<a href="probe.html">document/probe</a>
-		</li>
-
-		<li>
-			<a href="schema__.html">document/schema</a>
-		</li>
-
-		<li>
-			<a href="bussable_.html">mixins/bussable</a>
-		</li>
-
-		<li>
-			<a href="signalable_.html">mixins/signalable</a>
-		</li>
-
-		<li>
-			<a href="format.html">strings/format</a>
-		</li>
-
-		<li>
-			<a href="construct.html">utils/construct</a>
-		</li>
-
-		<li>
-			<a href="logger.html">utils/logger</a>
-		</li>
-
-		<li>
-			<a href="module-view.html">view</a>
-		</li>
-
-		<li>
-			<a href="presence.html">view/presence</a>
-		</li>
-
-		<li>
-			<a href="zone.html">view/zone</a>
-		</li>
-
-	</ul>
-</li>
-
-<li class="dropdown">
-	<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
-		class="caret"></b></a>
-
-	<ul class="dropdown-menu ">
-
-		<li>
-			<a href="client.html">application/client</a>
-		</li>
-
-		<li>
-			<a href="base.html">base</a>
-		</li>
-
-		<li>
-			<a href="chains.html">base/chains</a>
-		</li>
-
-		<li>
-			<a href="model.html">document/model</a>
-		</li>
-
-		<li>
-			<a href="collector-ACollector.html">ACollector</a>
-		</li>
-
-		<li>
-			<a href="collector-CollectorBase.html">CollectorBase</a>
-		</li>
-
-		<li>
-			<a href="collector-OCollector.html">OCollector</a>
-		</li>
-
-		<li>
-			<a href="probe.queryOperators.html">queryOperators</a>
-		</li>
-
-		<li>
-			<a href="probe.updateOperators.html">updateOperators</a>
-		</li>
-
-		<li>
-			<a href="signalable-Signal.html">Signal</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html">View</a>
-		</li>
-
-		<li>
-			<a href="logger.Logger.html">Logger</a>
-		</li>
-
-	</ul>
-</li>
-
-<li class="dropdown">
-	<a href="mixins.list.html" class="dropdown-toggle" data-toggle="dropdown">Mixins<b
-		class="caret"></b></a>
-
-	<ul class="dropdown-menu ">
-
-		<li>
-			<a href="schema.html">document/schema</a>
-		</li>
-
-		<li>
-			<a href="bussable.html">mixins/bussable</a>
-		</li>
-
-		<li>
-			<a href="signalable.html">mixins/signalable</a>
-		</li>
-
-		<li>
-			<a href="presence_.html">view/presence</a>
-		</li>
-
-	</ul>
-</li>
-
-<li class="dropdown">
-	<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b
-		class="caret"></b></a>
-
-	<ul class="dropdown-menu ">
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewClosed">beforeViewClosed</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewEnded">beforeViewEnded</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewHidden">beforeViewHidden</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewOpened">beforeViewOpened</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewRendered">beforeViewRendered</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewShown">beforeViewShown</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewStarted">beforeViewStarted</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:beforeViewUnrendered">beforeViewUnrendered</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewClosed">viewClosed</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewEnded">viewEnded</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewHidden">viewHidden</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewOpened">viewOpened</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewRendered">viewRendered</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewShown">viewShown</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewStarted">viewStarted</a>
-		</li>
-
-		<li>
-			<a href="module-view.View.html#event:viewUnrendered">viewUnrendered</a>
-		</li>
-
-		<li>
-			<a href="presence_.html#event:elChanged">elChanged</a>
-		</li>
-
-	</ul>
-</li>
-
-<li class="dropdown">
-	<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
-		class="caret"></b></a>
-
-	<ul class="dropdown-menu ">
-
-		<li>
-			<a href="global.html#difference">difference</a>
-		</li>
-
-		<li>
-			<a href="global.html#head">head</a>
-		</li>
-
-		<li>
-			<a href="global.html#tail">tail</a>
-		</li>
-
-		<li>
-			<a href="global.html#utils/logger">utils/logger</a>
-		</li>
-
-	</ul>
-</li>
-
-</ul>
-</div>
-</div>
-
-<div class="row-fluid">
-
-<div class="span8">
-
-<div id="main">
-
-<h1 class="page-title">Global</h1>
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<a class="brand" href="index.html">Papyrus</a>
+			<ul class="nav">
+				
+				<li class="dropdown">
+					<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="client_.html">application/client</a>
+						</li>
+						
+						<li>
+							<a href="module-base.html">base</a>
+						</li>
+						
+						<li>
+							<a href="chains_.html">base/chains</a>
+						</li>
+						
+						<li>
+							<a href="binder.html">document/binder</a>
+						</li>
+						
+						<li>
+							<a href="collector.html">document/collector</a>
+						</li>
+						
+						<li>
+							<a href="model__.html">document/model</a>
+						</li>
+						
+						<li>
+							<a href="probe.html">document/probe</a>
+						</li>
+						
+						<li>
+							<a href="schema__.html">document/schema</a>
+						</li>
+						
+						<li>
+							<a href="bussable_.html">mixins/bussable</a>
+						</li>
+						
+						<li>
+							<a href="signalable_.html">mixins/signalable</a>
+						</li>
+						
+						<li>
+							<a href="format.html">strings/format</a>
+						</li>
+						
+						<li>
+							<a href="construct.html">utils/construct</a>
+						</li>
+						
+						<li>
+							<a href="logger.html">utils/logger</a>
+						</li>
+						
+						<li>
+							<a href="module-view.html">view</a>
+						</li>
+						
+						<li>
+							<a href="animation.html">view/animation</a>
+						</li>
+						
+						<li>
+							<a href="presence.html">view/presence</a>
+						</li>
+						
+						<li>
+							<a href="zone.html">view/zone</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="client.html">application/client</a>
+						</li>
+						
+						<li>
+							<a href="base.html">base</a>
+						</li>
+						
+						<li>
+							<a href="chains.html">base/chains</a>
+						</li>
+						
+						<li>
+							<a href="model.html">document/model</a>
+						</li>
+						
+						<li>
+							<a href="collector-ACollector.html">ACollector</a>
+						</li>
+						
+						<li>
+							<a href="collector-CollectorBase.html">CollectorBase</a>
+						</li>
+						
+						<li>
+							<a href="collector-OCollector.html">OCollector</a>
+						</li>
+						
+						<li>
+							<a href="probe.queryOperators.html">queryOperators</a>
+						</li>
+						
+						<li>
+							<a href="probe.updateOperators.html">updateOperators</a>
+						</li>
+						
+						<li>
+							<a href="signalable-Signal.html">Signal</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html">View</a>
+						</li>
+						
+						<li>
+							<a href="animation-AnimationManager.html">AnimationManager</a>
+						</li>
+						
+						<li>
+							<a href="logger.Logger.html">Logger</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="mixins.list.html" class="dropdown-toggle" data-toggle="dropdown">Mixins<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="schema.html">document/schema</a>
+						</li>
+						
+						<li>
+							<a href="bussable.html">mixins/bussable</a>
+						</li>
+						
+						<li>
+							<a href="signalable.html">mixins/signalable</a>
+						</li>
+						
+						<li>
+							<a href="presence_.html">view/presence</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="events.list.html" class="dropdown-toggle" data-toggle="dropdown">Events<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewClosed">beforeViewClosed</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewEnded">beforeViewEnded</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewHidden">beforeViewHidden</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewOpened">beforeViewOpened</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewRendered">beforeViewRendered</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewShown">beforeViewShown</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewStarted">beforeViewStarted</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:beforeViewUnrendered">beforeViewUnrendered</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewClosed">viewClosed</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewEnded">viewEnded</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewHidden">viewHidden</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewOpened">viewOpened</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewRendered">viewRendered</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewShown">viewShown</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewStarted">viewStarted</a>
+						</li>
+						
+						<li>
+							<a href="module-view.View.html#event:viewUnrendered">viewUnrendered</a>
+						</li>
+						
+						<li>
+							<a href="animation.AnimationManager.html#event:animationEnded">animationEnded</a>
+						</li>
+						
+						<li>
+							<a href="animation.AnimationManager.html#event:animationStarted">animationStarted</a>
+						</li>
+						
+						<li>
+							<a href="presence_.html#event:elChanged">elChanged</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+				<li class="dropdown">
+					<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b
+						class="caret"></b></a>
+
+					<ul class="dropdown-menu ">
+						
+						<li>
+							<a href="global.html#difference">difference</a>
+						</li>
+						
+						<li>
+							<a href="global.html#head">head</a>
+						</li>
+						
+						<li>
+							<a href="global.html#tail">tail</a>
+						</li>
+						
+						<li>
+							<a href="global.html#utils/logger">utils/logger</a>
+						</li>
+						
+
+					</ul>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+
+		
+		<div class="span8">
+			
+				<div id="main">
+					
+
+
+	<h1 class="page-title">Global</h1>
 <section>
 
 <header>
-	<h2>
-
-	</h2>
-
+    <h2>
+    
+    </h2>
+    
 </header>
 
 <article>
-<div class="container-overview">
+    <div class="container-overview">
+    
 
-	<dl class="details">
+    
+        
 
-	</dl>
+        
+<dl class="details">
+	
 
-</div>
+	
 
-<h3 class="subsection-title">Members</h3>
+	
 
-<dl>
+	
 
-	<dt>
-	<h4 class="name" id="utils/logger"><span class="type-signature">&lt;static> </span>utils/logger<span
-		class="type-signature"> :<a href="logger.Logger.html">utils/logger.Logger</a></span></h4>
+	
 
-	</dt>
-	<dd>
+	
 
-		<div class="description">
-			<p>The system global, cross-platform logger</p>
-		</div>
+	
 
-		<h5>Type:</h5>
-		<ul>
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        <dl>
+            
+<dt>
+    <h4 class="name" id="utils/logger"><span class="type-signature">&lt;static> </span>utils/logger<span class="type-signature"> :<a href="logger.Logger.html">utils/logger.Logger</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The system global, cross-platform logger</p>
+    </div>
+    
+    
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type"><a href="logger.Logger.html">utils/logger.Logger</a></span>
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
 			<li>
-
-				<span class="param-type"><a href="logger.Logger.html">utils/logger.Logger</a></span>
-
+				<a href="logger.js.html">utils/logger.js</a>,
+				 <a href="logger.js.html#sunlight-1-line-83">line 83</a>
 			</li>
 		</ul>
-
-		<dl class="details">
-
-			<dt class="tag-source">Source:</dt>
-			<dd class="tag-source">
-				<ul class="dummy">
-					<li>
-						<a href="logger.js.html">utils/logger.js</a>,
-						<a href="logger.js.html#sunlight-1-line-83">line 83</a>
-					</li>
-				</ul>
-			</dd>
-
-		</dl>
-
 	</dd>
+	
 
+	
+
+	
+
+	
 </dl>
 
-<h3 class="subsection-title">Methods</h3>
+    
+    
+</dd>
+
+        </dl>
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<dt>
+    <h4 class="name" id="difference"><span class="type-signature"></span>difference<span class="signature">()</span><span class="type-signature"> &rarr; {array}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Creates an array of array elements not present in the other arrays using strict equality for comparisons, i.e. ===.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="collector.js.html">document/collector.js</a>,
+				 <a href="collector.js.html#sunlight-1-line-279">line 279</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
 
 <dl>
-
-<dt>
-<h4 class="name" id="difference"><span class="type-signature"></span>difference<span class="signature">()</span><span
-	class="type-signature"> &rarr; {array}</span></h4>
-
-</dt>
-<dd>
-
-	<div class="description">
-		<p>Creates an array of array elements not present in the other arrays using strict equality for comparisons, i.e.
-		   ===.</p>
-	</div>
-
-	<dl class="details">
-
-		<dt class="tag-source">Source:</dt>
-		<dd class="tag-source">
-			<ul class="dummy">
-				<li>
-					<a href="collector.js.html">document/collector.js</a>,
-					<a href="collector.js.html#sunlight-1-line-279">line 279</a>
-				</li>
-			</ul>
-		</dd>
-
-	</dl>
-
-	<h5>Returns:</h5>
-
-	<dl>
-		<dt>
-			Type
-		</dt>
-		<dd>
-
-			<span class="param-type">array</span>
-
-		</dd>
-	</dl>
-
-</dd>
-
-<dt>
-<h4 class="name" id="head"><span class="type-signature"></span>head<span class="signature">(<span
-	class="optional">n</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
-
-</dt>
-<dd>
-
-	<div class="description">
-		<p>Gets the first n values of the array</p>
-	</div>
-
-	<h5>Parameters:</h5>
-
-	<table class="params table table-striped">
-		<thead>
-		<tr>
-
-			<th>Name</th>
-
-			<th>Type</th>
-
-			<th>Argument</th>
-
-			<th class="last">Description</th>
-		</tr>
-		</thead>
-
-		<tbody>
-
-		<tr>
-
-			<td class="name"><code>n</code></td>
-
-			<td class="type">
-
-				<span class="param-type">number</span>
-
-			</td>
-
-			<td class="attributes">
-
-				&lt;optional><br>
-
-			</td>
-
-			<td class="description last"><p>The numer of items to return</p></td>
-		</tr>
-
-		</tbody>
-	</table>
-
-	<dl class="details">
-
-		<dt class="tag-source">Source:</dt>
-		<dd class="tag-source">
-			<ul class="dummy">
-				<li>
-					<a href="collector.js.html">document/collector.js</a>,
-					<a href="collector.js.html#sunlight-1-line-296">line 296</a>
-				</li>
-			</ul>
-		</dd>
-
-	</dl>
-
-	<h5>Returns:</h5>
-
-	<dl>
-		<dt>
-			Type
-		</dt>
-		<dd>
-
-			<span class="param-type">*</span>
-
-		</dd>
-	</dl>
-
-</dd>
-
-<dt>
-<h4 class="name" id="module:strings/format"><span class="type-signature"></span>require("strings/format")<span
-	class="signature">(format, args)</span><span class="type-signature"> &rarr; {string}</span></h4>
-
-</dt>
-<dd>
-
-	<div class="description">
-		<p>Format a string quickly and easily using .net style format strings</p>
-	</div>
-
-	<h5>Parameters:</h5>
-
-	<table class="params table table-striped">
-		<thead>
-		<tr>
-
-			<th>Name</th>
-
-			<th>Type</th>
-
-			<th>Argument</th>
-
-			<th class="last">Description</th>
-		</tr>
-		</thead>
-
-		<tbody>
-
-		<tr>
-
-			<td class="name"><code>format</code></td>
-
-			<td class="type">
-
-				<span class="param-type">string</span>
-
-			</td>
-
-			<td class="attributes">
-
-			</td>
-
-			<td class="description last"><p>A string format like &quot;Hello {0}, now take off your {1}!&quot;</p></td>
-		</tr>
-
-		<tr>
-
-			<td class="name"><code>args</code></td>
-
-			<td class="type">
-
-				<span class="param-type">?</span>
-
-			</td>
-
-			<td class="attributes">
-
-				&lt;repeatable><br>
-
-			</td>
-
-			<td class="description last"><p>One argument per <code>{}</code> in the string, positionally replaced</p></td>
-		</tr>
-
-		</tbody>
-	</table>
-
-	<dl class="details">
-
-		<dt class="tag-source">Source:</dt>
-		<dd class="tag-source">
-			<ul class="dummy">
-				<li>
-					<a href="format.js.html">strings/format.js</a>,
-					<a href="format.js.html#sunlight-1-line-15">line 15</a>
-				</li>
-			</ul>
-		</dd>
-
-	</dl>
-
-	<h5>Returns:</h5>
-
-	<dl>
-		<dt>
-			Type
-		</dt>
-		<dd>
-
-			<span class="param-type">string</span>
-
-		</dd>
-	</dl>
-
-</dd>
-
-<dt>
-<h4 class="name" id="tail"><span class="type-signature"></span>tail<span class="signature">(<span
-	class="optional">n</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
-
-</dt>
-<dd>
-
-	<div class="description">
-		<p>This method gets all but the first values of array</p>
-	</div>
-
-	<h5>Parameters:</h5>
-
-	<table class="params table table-striped">
-		<thead>
-		<tr>
-
-			<th>Name</th>
-
-			<th>Type</th>
-
-			<th>Argument</th>
-
-			<th class="last">Description</th>
-		</tr>
-		</thead>
-
-		<tbody>
-
-		<tr>
-
-			<td class="name"><code>n</code></td>
-
-			<td class="type">
-
-				<span class="param-type">number</span>
-
-			</td>
-
-			<td class="attributes">
-
-				&lt;optional><br>
-
-			</td>
-
-			<td class="description last"><p>The numer of items to return</p></td>
-		</tr>
-
-		</tbody>
-	</table>
-
-	<dl class="details">
-
-		<dt class="tag-source">Source:</dt>
-		<dd class="tag-source">
-			<ul class="dummy">
-				<li>
-					<a href="collector.js.html">document/collector.js</a>,
-					<a href="collector.js.html#sunlight-1-line-287">line 287</a>
-				</li>
-			</ul>
-		</dd>
-
-	</dl>
-
-	<h5>Returns:</h5>
-
-	<dl>
-		<dt>
-			Type
-		</dt>
-		<dd>
-
-			<span class="param-type">*</span>
-
-		</dd>
-	</dl>
-
-</dd>
-
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">array</span>
+
+
+	</dd>
 </dl>
 
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="head"><span class="type-signature"></span>head<span class="signature">(<span class="optional">n</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Gets the first n values of the array</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>n</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The numer of items to return</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="collector.js.html">document/collector.js</a>,
+				 <a href="collector.js.html#sunlight-1-line-296">line 296</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">*</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="module:strings/format"><span class="type-signature"></span>require("strings/format")<span class="signature">(format, args)</span><span class="type-signature"> &rarr; {string}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Format a string quickly and easily using .net style format strings</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>A string format like &quot;Hello {0}, now take off your {1}!&quot;</p></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">?</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>One argument per <code>{}</code> in the string, positionally replaced</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="format.js.html">strings/format.js</a>,
+				 <a href="format.js.html#sunlight-1-line-15">line 15</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">string</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="tail"><span class="type-signature"></span>tail<span class="signature">(<span class="optional">n</span>)</span><span class="type-signature"> &rarr; {*}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>This method gets all but the first values of array</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>n</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>The numer of items to return</p></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="collector.js.html">document/collector.js</a>,
+				 <a href="collector.js.html#sunlight-1-line-287">line 287</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">*</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
 </article>
 
 </section>
 
-</div>
-
-<div class="clearfix"></div>
-<footer>
 
 
+
+				</div>
+
+				<div class="clearfix"></div>
+				<footer>
+					
+					
 		<span class="copyright">
 		Papyrus copyright ©2014 Terry Weiss. All rights reserved.
 		</span>
-	<br />
-
+					<br />
+					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Sat Jun 7th 2014 using the <a
+		on Tue Jun 10th 2014 using the <a
 			href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
-</footer>
-</div>
+				</footer>
+			</div>
 
-<div class="span3">
-	<div id="toc"></div>
-</div>
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
+			
+			<br clear="both">
+		</div>
 
-<br clear="both">
-</div>
+	</div>
+	<!--<script src="scripts/sunlight.js"></script>-->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script src="scripts/bootstrap-dropdown.js"></script>
+	<script src="scripts/toc.js"></script>
 
-</div>
-<!--<script src="scripts/sunlight.js"></script>-->
-<script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/bootstrap-dropdown.js"></script>
-<script src="scripts/toc.js"></script>
-
-<script>
-	$( function () {
-		$( "#toc" ).toc( {
-			anchorName  : function ( i, heading, prefix ) {
-				return $( heading ).attr( "id" ) || ( prefix + i );
-			},
-			selectors   : "h1,h2,h3,h4",
-			showAndHide : false,
-			scrollTo    : 60
-		} );
-		$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
-		$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-		$( '.dropdown-toggle' ).dropdown();
+	<script>
+		$( function () {
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					return $( heading ).attr( "id" ) || ( prefix + i );
+				},
+				selectors   : "h1,h2,h3,h4",
+				showAndHide : false,
+				scrollTo    : 60
+			} );
+			$( "#toc>ul" ).addClass( "nav nav-pills nav-stacked" );
+			$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+			$('.dropdown-toggle').dropdown();
 //			$( ".tutorial-section pre, .readme-section pre" ).addClass( "sunlight-highlight-javascript" ).addClass( "linenums" );
 
-		$( ".tutorial-section pre, .readme-section pre" ).each( function () {
-			var $this = $( this );
+			$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+				var $this = $( this );
 
-			var example = $this.find( "code" );
-			exampleText = example.html();
-			var lang = /{@lang (.*?)}/.exec( exampleText );
-			if ( lang && lang[1] ) {
-				exampleText = exampleText.replace( lang[0], "" );
-				example.html( exampleText );
-				lang = lang[1];
-			} else {
-				lang = "javascript";
-			}
+				var example = $this.find("code" );
+				exampleText = example.html();
+				var lang = /{@lang (.*?)}/.exec( exampleText );
+				if ( lang && lang[1] ) {
+					exampleText = exampleText.replace( lang[0], "" );
+					example.html(exampleText);
+					lang = lang[1];
+				} else {
+					lang = "javascript";
+				}
 
-			if ( lang ) {
+				if ( lang ) {
 
-				$this
-					.addClass( "sunlight-highlight-" + lang )
-					.addClass( "linenums" )
-					.html( example.html() );
+					$this
+						.addClass( "sunlight-highlight-" + lang )
+						.addClass( "linenums" )
+						.html( example.html() );
 
-			}
+				}
+			} );
+
+			Sunlight.highlightAll( {
+				lineNumbers : true,
+				showMenu:true,
+				enableDoclinks:true
+		} );
 		} );
 
-		Sunlight.highlightAll( {
-			lineNumbers    : true,
-			showMenu       : true,
-			enableDoclinks : true
-		} );
-	} );
+	</script>
 
-</script>
+	<!--Google Analytics-->
+	
 
-<!--Google Analytics-->
-
-<!--Navigation and Symbol Display-->
+	<!--Navigation and Symbol Display-->
+	
 
 </body>
 </html>

@@ -12,6 +12,7 @@ var async = require( "async" );
  * @exports view/zone
  */
 var Zone = Base.compose( [Base, View], /** @lends view/zone# */{
+	declaredClass : "view/zone",
 	constructor   : function () {
 		this.viewsCollection = collector();
 		this.views = this.viewsCollection._heap;

@@ -1,5 +1,5 @@
 {
-  "name": "Papyrus",
+  "name": "Papyrus Bench Tester",
   "version": "0.0.0",
   "homepage": "https://github.com/terryweiss/papyrus",
   "author": {
@@ -15,10 +15,8 @@
     "dox"
   ],
   "dependencies": {
+    "semantic": "~0.18.0",
     "jquery": "~2.1.1",
-    "responsiveboilerplate": "~2.3.2",
-    "jqueryui": "~1.10.4",
-    "animate.css": "~3.1.1",
-    "semantic": "~0.18.0"
+    "jqueryui": "~1.10.4"
   }
 }

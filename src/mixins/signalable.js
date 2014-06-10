@@ -63,6 +63,7 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 		this.name = name || sys.uniqueId( "signal" );
 		this.params = options.params;
 		this.defaultContext = options.context;
+		sys.bindAll(this);
 	},
 
 	/**
@@ -98,7 +99,7 @@ var Signal = Base.compose( [Base, signals.Signal], /** @lends module:mixins/sign
 
 		if ( !n ) {
 			//should come after memorize
-			return;
+			return callback();
 		}
 
 		var that = this;
@@ -306,6 +307,7 @@ var Signalable = Base.compose( [Base], /** @lends mixins/signalable# */{
 		sys.each( sys.keys( this ), function ( key ) {
 			if ( this[key] instanceof Signal || this[key] instanceof signals.Signal ) {
 				this[key].close();
+				this[key].end();
 			}
 		}, this );
 	},

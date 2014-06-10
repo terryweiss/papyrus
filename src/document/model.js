@@ -32,6 +32,7 @@ var sys = require( "lodash" );
  * @borrows module:document/probe.every as every
  */
 var Model = Base.compose( [Base], /** @lends documents/model# */{
+	declaredClass : "document/model",
 	constructor : function () {
 		var that = this;
 		probe.mixin( this );

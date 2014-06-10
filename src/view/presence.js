@@ -15,12 +15,14 @@ var Signalable = require( "../mixins/signalable" );
  * @mixin
  */
 var Presence = Base.compose( [Base, Signalable], /** @lends view/presence# */{
+	declaredClass : "view/Presence",
 	constructor : function ( options ) {
+
 		options = options || {};
 		var that = this;
 
 		if ( options.$el ) {
-			this.element = options.$el;
+			element = options.$el;
 		}
 		if ( options.tagName ) {
 			this.tagName = options.tagName;
@@ -61,7 +63,7 @@ var Presence = Base.compose( [Base, Signalable], /** @lends view/presence# */{
 			},
 			set : function ( val ) {
 				if ( !sys.isEmpty( element ) ) {
-					that.elChanged.fire( that.element );
+					that.elChanged.fire( element );
 				}
 				if ( val instanceof jQuery ) {
 					element = val;

@@ -1,5 +1,7 @@
 node_modules*
 bower_components*
+bench/node_modules*
+bench/bower_components*
 *.map
 .idea*
 npm-debug.log
