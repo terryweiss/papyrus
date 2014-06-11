@@ -8,7 +8,7 @@
 
 var dcl = require( "dcl" );
 var chains = require( "./chains" );
-var logger = require("../utils/logger");
+var logger = require( "../utils/logger" );
 
 /**
  * @classdesc The base of all classes in the system, this is one of the few pure "classes" in core the of the system. It is a
@@ -22,17 +22,17 @@ var logger = require("../utils/logger");
  */
 var Base = dcl( [chains], /** @lends base# */{
 	declaredClass      : "Base",
-	constructor: function(){
-		logger.trace(this.declaredClass, "constructor");
+	constructor        : function () {
+		logger.trace( this.declaredClass, "constructor" );
 	},
-	close: function(){
-		logger.trace(this.declaredClass, "close");
+	close              : function () {
+		logger.trace( this.declaredClass, "close" );
 	},
-	open: function(){
-		logger.trace(this.declaredClass, "open");
+	open               : function () {
+		logger.trace( this.declaredClass, "open" );
 	},
-	start: function(){
-		logger.trace(this.declaredClass, "start");
+	start              : function () {
+		logger.trace( this.declaredClass, "start" );
 	},
 	/**
 	 * Add an option to a class. If any members of the hash already exist in `this._options`, they will be overwritten.
@@ -66,7 +66,7 @@ var Base = dcl( [chains], /** @lends base# */{
 	 * @see {base/chains#destroy}
 	 */
 	end : function () {
-		logger.trace(this.declaredClass, "end");
+		logger.trace( this.declaredClass, "end" );
 		this.destroy()
 	},
 
@@ -79,7 +79,7 @@ var Base = dcl( [chains], /** @lends base# */{
 	 * @private
 	 */
 	destroy : function () {
-		logger.trace(this.declaredClass, "destroy");
+		logger.trace( this.declaredClass, "destroy" );
 		this._options = null;
 	}
 //	/**
@@ -100,4 +100,5 @@ var Base = dcl( [chains], /** @lends base# */{
 
 Base.compose = dcl;
 Base.mixin = dcl.mix;
+Base.super = dcl.superCall;
 module.exports = Base;

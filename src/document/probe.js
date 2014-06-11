@@ -987,7 +987,7 @@ exports.proxy = function ( obj ) {
  methods can skip the first parameter so that find(object, query) can just be called as object.find(query)
  @param {object|array} obj The object or array to bind to
  @param {object|array=} collection If the collection is not the same as <code>this</code> but is a property, or even
- a whole other object, you specify that here. Otherwise the <code>obj</code> is assumed to be the same as the collecion
+ a whole other object, you specify that here. Otherwise the <code>obj</code> is assumed to be the same as the collection
  **/
 exports.mixin = function ( obj, collection ) {
 	collection = collection || obj;

@@ -25,10 +25,13 @@ var View = Base.compose( [Base, Presence, Signalable], /** @lends module:view.Vi
 	 * @type {function}
 	 */
 	template      : null,
-	constructor   : function () {
-
+	constructor   : function ( options ) {
+		options = options || {};
+		if ( options.template ) {
+			this.template = options.template;
+		}
 		var that = this;
-		this.options = this.options || {};
+		this.options = this.options || options;
 		this._viewCallState = {
 			start : false,
 			open  : false,
@@ -292,7 +295,7 @@ var View = Base.compose( [Base, Presence, Signalable], /** @lends module:view.Vi
 	 */
 	end      : function ( params, callback ) {
 		this._resetViewCallState();
-		this._viewCallState.end= true;
+		this._viewCallState.end = true;
 		this._setLevel( viewStates.dormant, params, callback );
 	},
 
@@ -318,7 +321,7 @@ var View = Base.compose( [Base, Presence, Signalable], /** @lends module:view.Vi
 		if ( !sys.isFunction( callback ) ) {
 			callback = sys.identity;
 		}
-		               var that = this;
+		var that = this;
 		async.series( [
 			sys.partial( this.beforeViewStarted.fire, params ),
 			sys.partial( this.viewStarted.fire, params ) ,
@@ -362,9 +365,6 @@ var View = Base.compose( [Base, Presence, Signalable], /** @lends module:view.Vi
 	 * @protected
 	 */
 	_doRender   : function ( params, callback ) {
-		if ( !sys.isFunction( this.template ) ) {
-			throw new TypeError( "render requires a template method" );
-		}
 
 		if ( sys.isFunction( params ) ) {
 			callback = params;
@@ -378,10 +378,12 @@ var View = Base.compose( [Base, Presence, Signalable], /** @lends module:view.Vi
 		async.series( [
 			sys.partial( this.beforeViewRendered.fire, params ),
 			function ( done ) {
-				params = params || {};
-				params._options = that.options;
-				params._view = sys.isFunction( that.toJSON ) ? that.toJSON() : that;
-				that.$el.html( that.template( params ) );
+				if ( sys.isFunction( that.template ) ) {
+					params = params || {};
+					params._options = that.options;
+					params._view = sys.isFunction( that.toJSON ) ? that.toJSON() : that;
+					that.$el.html( that.template( params ) );
+				}
 				done();
 			},
 			sys.partial( this.viewRendered.fire, params )

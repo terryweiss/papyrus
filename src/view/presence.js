@@ -16,13 +16,16 @@ var Signalable = require( "../mixins/signalable" );
  */
 var Presence = Base.compose( [Base, Signalable], /** @lends view/presence# */{
 	declaredClass : "view/Presence",
-	constructor : function ( options ) {
+	constructor   : function ( options ) {
 
 		options = options || {};
 		var that = this;
 
 		if ( options.$el ) {
 			element = options.$el;
+		}
+		if ( options.selector ) {
+			this.selector = options.selector;
 		}
 		if ( options.tagName ) {
 			this.tagName = options.tagName;
@@ -56,7 +59,9 @@ var Presence = Base.compose( [Base, Signalable], /** @lends view/presence# */{
 		 */
 		Object.defineProperty( this, "$el", {
 			get : function () {
-				if ( sys.isEmpty( element ) ) {
+				if ( sys.isEmpty( element ) && !sys.isEmpty( this.selector ) ) {
+					element = $( this.selector );
+				} else if ( sys.isEmpty( element ) ) {
 					element = that._buildTag();
 				}
 				return element
@@ -78,7 +83,7 @@ var Presence = Base.compose( [Base, Signalable], /** @lends view/presence# */{
 	 * @returns {jQuery}
 	 * @private
 	 */
-	_buildTag   : function () {
+	_buildTag     : function () {
 		this.tagName = this.tagName || "div";
 		var $el = $( format( "<{0}/>", this.tagName ) );
 		if ( !sys.isEmpty( this.attributes ) ) {
@@ -96,22 +101,22 @@ var Presence = Base.compose( [Base, Signalable], /** @lends view/presence# */{
 	 * The name of the tag to use if $el isn't supplied by you
 	 * @type {string}
 	 */
-	tagName     : "div",
+	tagName       : "div",
 	/**
 	 * The name of the tag to apply to the tag if $el isn't supplied by you
 	 * @type {string}
 	 */
-	className   : "",
+	className     : "",
 	/**
 	 * The id to apply to the tag if $el isn't supplied by you
 	 * @type {string}
 	 */
-	id          : "",
+	id            : "",
 	/**
 	 * Attributes to apply to the tag if $el isn't supplied by you
 	 * @type {object}
 	 */
-	attributes  : {}
+	attributes    : {}
 
 } );
 

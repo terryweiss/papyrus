@@ -29,7 +29,7 @@ var CollectorBase = dcl( Base, /** @lends module:document/collector~CollectorBas
 		 */
 		this._heap = obj || {};
 		// mixin the probe
-		probe.mixTo( this, this._heap );
+		probe.mixin( this, this._heap );
 		/**
 		 * Get the size of the collection
 		 * @name length
