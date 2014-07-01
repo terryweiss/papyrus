@@ -3,14 +3,7 @@
   "version": "0.0.0-2",
   "description": "A library of useful tools and conventions to make shared client and server code a possibility",
   "dependencies": {
-    "async": "^0.9.0",
-    "ejs": "^1.0.0",
-    "jjv": "^1.0.0",
-    "lodash": "~2.4.0",
-    "loglevel": "~0.6.0",
-    "postal": "~0.8.9",
-    "promise": "^5.0.0",
-    "signals": "~1.0.0"
+
   },
   "license": "MIT",
   "author": {
@@ -29,16 +22,6 @@
     "web"
   ],
   "devDependencies": {
-    "browserify": "^4.1.7",
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^2.1.0",
-    "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-jst": "^0.6.0",
-    "grunt-contrib-less": "^0.11.1",
-    "grunt-contrib-uglify": "^0.4.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-ejs": "^0.1.0",
-    "grunt-shell": "~0.7.0",
-    "ink-docstrap": "^0.4.2"
+
   }
 }
