@@ -1,1 +1,1 @@
-module.exports = require( "papurus-core/utils/logger" );
+module.exports = require( "papyrus-core/utils/logger" );
