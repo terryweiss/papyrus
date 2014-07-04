@@ -1,1 +1,1 @@
-module.exports = require( "papurus-core/document/signalable" );
+module.exports = require( "papyrus-core/document/signalable" );

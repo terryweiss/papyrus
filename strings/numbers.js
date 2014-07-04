@@ -1,1 +1,1 @@
-module.exports = require( "papurus-core/strings/numbers" );
+module.exports = require( "papyrus-core/strings/numbers" );

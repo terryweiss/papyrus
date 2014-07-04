@@ -1,1 +1,1 @@
-module.exports = require( "papurus-core/document/bussable" );
+module.exports = require( "papyrus-core/events/bussable" );

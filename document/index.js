@@ -1,1 +1,1 @@
-module.exports = require( "papurus-core/document" );
+module.exports = require( "papyrus-core/document" );
