@@ -1,14 +1,21 @@
 module.exports = function ( grunt ) {
 
 	grunt.loadNpmTasks( 'grunt-shell' );
-	grunt.loadNpmTasks( 'grunt-browserify' );
-	grunt.loadNpmTasks( 'grunt-contrib-watch' );
+//	grunt.loadNpmTasks( 'grunt-browserify' );
+//	grunt.loadNpmTasks( 'grunt-contrib-watch' );
 
 	grunt.initConfig( {
 
 		shell : {
-			dox : {
-				command : "jsdoc -c jsdoc.conf.json"
+			release : {
+				command : [
+					"git add .",
+					'git commit -m "ready for release"',
+					"npm version patch",
+					"git push",
+					"git push --tags",
+					"npm publish"
+				].join("&&")
 			}
 		},
 

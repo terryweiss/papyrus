@@ -21,5 +21,8 @@
     "node",
     "web"
   ],
-  "devDependencies": {}
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-shell": "^0.7.0"
+  }
 }
